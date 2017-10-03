@@ -9,3 +9,5 @@ let serverWrap = () => {
 };
 
 serverWrap();
+
+module.exports = serverWrap;
