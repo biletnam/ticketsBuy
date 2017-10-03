@@ -1,0 +1,33 @@
+{
+  "name": "ticketbuy",
+  "version": "0.0.1",
+  "description": "Frontent for buying tickets for airport",
+  "main": "hello.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint **/*.js",
+    "test": "./node_modules/.bin/mocha",
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
+  },
+  "pre-commit": [
+    "precommit-msg",
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chebuRush/ticketBuy.git"
+  },
+  "author": "Victor Panichkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chebuRush/ticketBuy/issues"
+  },
+  "homepage": "https://github.com/chebuRush/ticketBuy#readme",
+  "devDependencies": {
+    "chai": "*",
+    "eslint": "*",
+    "eslint-plugin-react": "^7.4.0",
+    "jsdoc": "^3.5.5",
+    "mocha": "*",
+    "pre-commit": "^1.2.2"
+  }
+}
