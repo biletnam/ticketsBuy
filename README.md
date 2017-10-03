@@ -1,2 +1,2 @@
-# ticketBuy
-Frontend for buying tickets for airport
+# ticketsBuy
+Frontend for buying tickets in  airport
