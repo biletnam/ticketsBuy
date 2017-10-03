@@ -6,13 +6,19 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 describe("/GET homepage", () => {
-    it("it should GET homepage", (done) => {
+    before(() => server.listen());
+    after( ()=> server.close());
+
+
+    it("it should GET homepage", function(done) {
         chai.request("http://localhost:8080")
             .get("/")
-            .end((err, res) => {
+            .end(function (err, res){
                 res.statusCode.should.to.equal(200);
                 res.text.should.to.equal('Hello world!');
                 done();
             });
     });
+
+
 });
