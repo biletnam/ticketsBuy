@@ -2,20 +2,18 @@ let chai = require("chai");
 let mocha = require("mocha");
 let chaiHttp = require("chai-http");
 let server = require("../server");
-let should = chai.should();
+var expect = require("chai").expect;
 
 chai.use(chaiHttp);
 describe("/GET homepage", () => {
-    before(() => server.listen());
     after( ()=> server.close());
 
 
-    it("it should GET homepage", function(done) {
+    it("it should return statusCode", function(done) {
         chai.request("http://localhost:8080")
             .get("/")
             .end(function (err, res){
-                res.statusCode.should.to.equal(200);
-                res.text.should.to.equal('Hello world!');
+                expect(res.statusCode).to.equal(200);
                 done();
             });
     });
