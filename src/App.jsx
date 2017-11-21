@@ -3,12 +3,16 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 import Menu from "./components/Menu.jsx";
 import StartPage from "./components/StartPage/StartPage.jsx";
-import FindFlights from "./components/FindFlights/FindFlights.jsx"
-import Tickets from "./components/Tickets/Tickets.jsx"
-import AdditionalInfo from "./components/AdditionalInfo/AdditionalInfo.jsx"
-import Success from "./components/EndPage/Success.jsx"
-import Failed from "./components/EndPage/Failed.jsx"
-import NotFound from "./components/NotFound.jsx"
+
+/*
+import FindFlights from "./components/FindFlights/FindFlights.jsx";
+import Tickets from "./components/Tickets/Tickets.jsx";
+import AdditionalInfo from "./components/AdditionalInfo/AdditionalInfo.jsx";
+import Success from "./components/EndPage/Success.jsx";
+import Failed from "./components/EndPage/Failed.jsx";
+import NotFound from "./components/NotFound.jsx";
+*/
+
 
 
 
