@@ -3,7 +3,6 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 import Menu from "./components/Menu.jsx";
 import StartPage from "./components/StartPage/StartPage.jsx";
-import SearchFlights from "./components/StartPage/WaitForFlight.jsx";
 
 /*
 import FindFlights from "./components/FindFlights/FindFlights.jsx";
@@ -27,7 +26,6 @@ export default class App extends React.Component {
                     <div className="appBodyDiv">
                         <Switch>
                             <Route exact path="/" component={StartPage}/>
-                            {<Route path="/searchFlights" component={SearchFlights}/>}
                             {/*<Route path="/findFlights" component={FindFlights}/>*/}
                             {/*<Route path="/tickets" component={Tickets}/>*/}
                             {/*<Route path="/info" component={AdditionalInfo}/>*/}
