@@ -32568,9 +32568,16 @@ var FindFlights = function (_React$Component) {
         }
     }, {
         key: "handleFilter",
-        value: function handleFilter(arr, dep, arrTMin, arrTMax, depTMin, depTMax, durT) {
-            var displayedFlights = Object.keys(this.state.flights).filter(function (flight) {
-                return arr.indexOf(flight.airportArrival) !== -1 && dep.indexOf(flight.airportDeparture) !== -1 && arrTMin <= flight.timeArrival && arrTMax >= flight.timeArrival && depTMin <= flight.timeDeparture && depTMax >= flight.timeDeparture && durT >= flight.timeArrival - flight.timeArrival;
+        value: function handleFilter(userWish) {
+            var arr = userWish.arr,
+                dep = userWish.dep,
+                arrTMin = userWish.arrTMin,
+                depTMin = userWish.depTMin,
+                durT = userWish.durT;
+
+
+            var displayedFlights = this.state.flights.filter(function (flight) {
+                return arr.indexOf(flight.airportArrival) !== -1 && dep.indexOf(flight.airportDeparture) !== -1 && new Date(2000, 1, 25, arrTMin, 0) <= new Date(2000, 1, 25, flight.timeArrival.split(":")[0], flight.timeArrival.split(":")[1]) && new Date(2000, 1, 25, depTMin, 0) <= new Date(2000, 1, 25, flight.timeDeparture.split(":")[0], flight.timeDeparture.split(":")[1]) && new Date(1970, 0, 1, durT, 0) >= new Date(new Date(2000, 1, 25, +flight.timeArrival.split(":")[0] - 2, flight.timeArrival.split(":")[1]) - new Date(2000, 1, 25, flight.timeDeparture.split(":")[0], flight.timeDeparture.split(":")[1]));
             });
             this.setState({ "displayedFlights": displayedFlights });
         }
@@ -32585,8 +32592,7 @@ var FindFlights = function (_React$Component) {
                 return _react2.default.createElement(
                     "div",
                     { className: "findFlightsComponents" },
-                    console.log("FilterBoxFindFlight: " + this.departureAirportFilter),
-                    _react2.default.createElement(_FilterBox2.default, { handleFilter: this.handleFilter, departureAirportList: this.departureAirportFilter, arrivalAirportList: this.arrivalAirportFilter }),
+                    _react2.default.createElement(_FilterBox2.default, { handleFilter: this.handleFilter.bind(this), departureAirportList: this.departureAirportFilter, arrivalAirportList: this.arrivalAirportFilter }),
                     this.state.displayedFlights.map(function (flight) {
                         return _react2.default.createElement(_Flight2.default, _extends({
                             key: flight.key,
@@ -32638,6 +32644,8 @@ var _TimeFilter2 = _interopRequireDefault(_TimeFilter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -32650,24 +32658,43 @@ var FilterBox = function (_React$Component) {
     function FilterBox(props) {
         _classCallCheck(this, FilterBox);
 
-        return _possibleConstructorReturn(this, (FilterBox.__proto__ || Object.getPrototypeOf(FilterBox)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (FilterBox.__proto__ || Object.getPrototypeOf(FilterBox)).call(this, props));
+
+        _this.state = {
+            "arr": _this.props.arrivalAirportList,
+            "dep": _this.props.departureAirportList,
+            "arrTMin": 0,
+            "depTMin": 0,
+            "durT": "24"
+        };
+        return _this;
     }
 
     _createClass(FilterBox, [{
+        key: "changeStateFromInnerElems",
+        value: function changeStateFromInnerElems(key, value) {
+            var _this2 = this;
+
+            this.setState(_defineProperty({}, key, value), function () {
+                console.log(_this2.state);
+                _this2.props.handleFilter(_this2.state);
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
                 "div",
                 { className: "FilterBoxComponent" },
-                _react2.default.createElement(_CheckBoxer2.default, { caption: "\u0410\u0435\u0440\u043E\u043F\u043E\u0440\u0442 \u0432\u044B\u043B\u0435\u0442\u0430", options: this.props.departureAirportList }),
+                _react2.default.createElement(_CheckBoxer2.default, { caption: "\u0410\u0435\u0440\u043E\u043F\u043E\u0440\u0442 \u0432\u044B\u043B\u0435\u0442\u0430", changeOuterState: this.changeStateFromInnerElems.bind(this, "dep"), options: this.props.departureAirportList }),
                 _react2.default.createElement("hr", null),
-                _react2.default.createElement(_CheckBoxer2.default, { caption: "\u0410\u0435\u0440\u043E\u043F\u043E\u0440\u0442 \u043F\u0440\u0438\u043B\u0435\u0442\u0430", options: this.props.arrivalAirportList }),
+                _react2.default.createElement(_CheckBoxer2.default, { caption: "\u0410\u0435\u0440\u043E\u043F\u043E\u0440\u0442 \u043F\u0440\u0438\u043B\u0435\u0442\u0430", changeOuterState: this.changeStateFromInnerElems.bind(this, "arr"), options: this.props.arrivalAirportList }),
                 _react2.default.createElement("hr", null),
-                _react2.default.createElement(_TimeFilter2.default, { caption: "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u043B\u0435\u0442\u0430 \u043F\u043E\u0441\u043B\u0435" }),
+                _react2.default.createElement(_TimeFilter2.default, { "default": 0, ident: "depT", step: 1, max: 24, min: 0, changeOuterState: this.changeStateFromInnerElems.bind(this, "depTMin"), caption: "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u043B\u0435\u0442\u0430 (\u043F\u043E\u0441\u043B\u0435)" }),
                 _react2.default.createElement("hr", null),
-                _react2.default.createElement(_TimeFilter2.default, { caption: "\u0412\u0440\u0435\u043C\u044F \u043F\u0440\u0438\u043B\u0435\u0442\u0430 \u043F\u043E\u0441\u043B\u0435" }),
+                _react2.default.createElement(_TimeFilter2.default, { "default": 0, ident: "arrT", step: 1, max: 24, min: 0, changeOuterState: this.changeStateFromInnerElems.bind(this, "arrTMin"), caption: "\u0412\u0440\u0435\u043C\u044F \u043F\u0440\u0438\u043B\u0435\u0442\u0430 (\u043F\u043E\u0441\u043B\u0435)" }),
                 _react2.default.createElement("hr", null),
-                _react2.default.createElement(_TimeFilter2.default, { caption: "\u041C\u0430\u043A\u0441.\u0447\u0430\u0441 \u043F\u043E\u043B\u044C\u043E\u0442\u0443" })
+                _react2.default.createElement(_TimeFilter2.default, { "default": 24, ident: "maxT", step: 1, max: 24, min: 1, changeOuterState: this.changeStateFromInnerElems.bind(this, "durT"), caption: "\u041C\u0430\u043A\u0441.\u0447\u0430\u0441 \u043F\u043E\u043B\u044C\u043E\u0442\u0443" })
             );
         }
     }]);
@@ -32711,13 +32738,31 @@ var checkBoxer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (checkBoxer.__proto__ || Object.getPrototypeOf(checkBoxer)).call(this, props));
 
-        console.log("checkBoxer: " + _this.props.options);
+        _this.state = {
+            "checkBoxes": _this.props.options.slice()
+        };
         return _this;
     }
 
     _createClass(checkBoxer, [{
+        key: "handleCheckBoxerFilter",
+        value: function handleCheckBoxerFilter(option) {
+            var copyState = this.state.checkBoxes.slice();
+            if (copyState.indexOf(option) === -1) {
+                copyState.push(option);
+            } else {
+                copyState.splice(copyState.indexOf(option), 1);
+            }
+            this.setState({
+                "checkBoxes": copyState
+            });
+            this.props.changeOuterState(copyState);
+        }
+    }, {
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             return _react2.default.createElement(
                 "div",
                 { className: "checkBoxComponent" },
@@ -32730,7 +32775,9 @@ var checkBoxer = function (_React$Component) {
                     return _react2.default.createElement(
                         "label",
                         { key: Math.random() * (100000 - 1) + 1 },
-                        _react2.default.createElement("input", { key: Math.random() * (100000 - 1) + 1, type: "checkbox", name: "checkbox", value: option }),
+                        _react2.default.createElement("input", { checked: _this2.state.checkBoxes.indexOf(option) !== -1, onChange: function onChange() {
+                                _this2.handleCheckBoxerFilter(option);
+                            }, key: Math.random() * (100000 - 1) + 1, type: "checkbox", name: "checkbox", value: option }),
                         option
                     );
                 })
@@ -32776,6 +32823,8 @@ var _Slider2 = _interopRequireDefault(_Slider);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -32800,10 +32849,20 @@ var TimeFilter = function (_React$Component) {
     function TimeFilter(props) {
         _classCallCheck(this, TimeFilter);
 
-        return _possibleConstructorReturn(this, (TimeFilter.__proto__ || Object.getPrototypeOf(TimeFilter)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (TimeFilter.__proto__ || Object.getPrototypeOf(TimeFilter)).call(this, props));
+
+        _this.state = _defineProperty({}, _this.props.ident, _this.props.default);
+        return _this;
     }
 
     _createClass(TimeFilter, [{
+        key: "handleTimeFilter",
+        value: function handleTimeFilter(event, value) {
+            event.preventDefault();
+            this.setState(_defineProperty({}, this.props.ident, value));
+            this.props.changeOuterState(value);
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -32817,7 +32876,7 @@ var TimeFilter = function (_React$Component) {
                 _react2.default.createElement(
                     _MuiThemeProvider2.default,
                     { muiTheme: muiTheme },
-                    _react2.default.createElement(_Slider2.default, { defaultValue: 1 })
+                    _react2.default.createElement(_Slider2.default, { min: this.props.min, value: this.state[this.props.ident], max: this.props.max, step: this.props.step, onChange: this.handleTimeFilter.bind(this) })
                 )
             );
         }
@@ -40476,12 +40535,12 @@ var Flight = function (_React$Component) {
                             _react2.default.createElement(
                                 "div",
                                 { className: "airportArrival" },
-                                this.props.airportArrival
+                                this.props.airportDeparture
                             ),
                             _react2.default.createElement(
                                 "div",
                                 { className: "airportDeparture" },
-                                this.props.airportDeparture
+                                this.props.airportArrival
                             )
                         )
                     ),
@@ -40519,7 +40578,6 @@ var Flight = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Flight;
-;
 
 /***/ }),
 /* 306 */

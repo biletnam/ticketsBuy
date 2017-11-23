@@ -19,14 +19,23 @@ const muiTheme = getMuiTheme({
 export default class TimeFilter extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            [this.props.ident] : this.props.default
+        };
     }
-
+    handleTimeFilter(event,value){
+        event.preventDefault();
+        this.setState({
+            [this.props.ident]: value
+        });
+        this.props.changeOuterState(value);
+    }
     render() {
         return (
             <div className="timeFilterComponent">
                 <h2>{this.props.caption}</h2>
                 <MuiThemeProvider muiTheme={muiTheme}>
-                    <Slider defaultValue={1} />
+                    <Slider min={this.props.min} value={this.state[this.props.ident]} max={this.props.max} step={this.props.step} onChange={this.handleTimeFilter.bind(this)}/>
                 </MuiThemeProvider>
             </div>
         );

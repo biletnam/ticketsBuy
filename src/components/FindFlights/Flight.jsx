@@ -21,8 +21,8 @@ export default class Flight extends React.Component {
                         <div className="timeElapsed">{this.deltaTimeStr}</div>
                         <div className="horizDelimiter">&nbsp;</div>
                         <div className="airports">
-                            <div className="airportArrival">{this.props.airportArrival}</div>
-                            <div className="airportDeparture">{this.props.airportDeparture}</div>
+                            <div className="airportArrival">{this.props.airportDeparture}</div>
+                            <div className="airportDeparture">{this.props.airportArrival}</div>
                         </div>
                     </div>
                     <div className="arrival">
@@ -36,5 +36,5 @@ export default class Flight extends React.Component {
             </div>
         );
     }
-};
+}
 

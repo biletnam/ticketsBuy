@@ -39,11 +39,15 @@ export default class FindFlights extends React.Component {
                 throw new Error("FindFlights:onChooseFlight: " + error.message);
             });
     }
-    handleFilter(arr, dep, arrTMin, arrTMax, depTMin, depTMax, durT){
-        let displayedFlights =  Object.keys(this.state.flights).filter(function (flight){
+    handleFilter(userWish){
+        let {arr, dep, arrTMin,  depTMin,  durT} = userWish;
+
+        let displayedFlights = this.state.flights.filter(function (flight){
             return ( (arr.indexOf(flight.airportArrival) !== -1) && (dep.indexOf(flight.airportDeparture) !== -1)
-            &&(arrTMin <= flight.timeArrival) && (arrTMax >= flight.timeArrival) && (depTMin <= flight.timeDeparture)
-                && (depTMax >= flight.timeDeparture) && (durT >= flight.timeArrival - flight.timeArrival)
+            &&(new Date(2000,1,25,arrTMin,0) <= new Date(2000,1,25,flight.timeArrival.split(":")[0],flight.timeArrival.split(":")[1]))
+                && (new Date(2000,1,25,depTMin,0) <=  new Date(2000,1,25,flight.timeDeparture.split(":")[0],flight.timeDeparture.split(":")[1]))
+                && ( new Date(1970,0,1,durT,0) >=  new Date(new Date(2000,1,25,(+flight.timeArrival.split(":")[0]-2),flight.timeArrival.split(":")[1]) -
+                        new Date(2000,1,25,flight.timeDeparture.split(":")[0],flight.timeDeparture.split(":")[1])))
             );
         });
         this.setState({"displayedFlights" : displayedFlights});
@@ -54,8 +58,7 @@ export default class FindFlights extends React.Component {
         } else {
             return (
                 <div className="findFlightsComponents">
-                    {console.log("FilterBoxFindFlight: "+ this.departureAirportFilter)}
-                    <FilterBox handleFilter={this.handleFilter} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
+                    <FilterBox handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
                     { this.state.displayedFlights.map((flight) =>{
                         return (
                             <Flight

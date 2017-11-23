@@ -6,19 +6,32 @@ import TimeFilter from "./TimeFilter.jsx";
 export default class FilterBox extends React.Component {
     constructor(props) {
         super(props);
+        this.state= {
+            "arr": this.props.arrivalAirportList,
+            "dep": this.props.departureAirportList,
+            "arrTMin" : 0,
+            "depTMin": 0,
+            "durT" : "24"
+        };
+    }
+    changeStateFromInnerElems(key, value){
+        this.setState({[key]: value}, ()=> {
+            console.log(this.state);
+            this.props.handleFilter(this.state);
+        });
     }
     render() {
         return (
-            <div className="FilterBoxComponent">
-                <CheckBoxer caption="Аеропорт вылета"  options={this.props.departureAirportList}/>
+            <div className="FilterBoxComponent" >
+                <CheckBoxer caption="Аеропорт вылета" changeOuterState={this.changeStateFromInnerElems.bind(this,"dep")} options={this.props.departureAirportList}/>
                 <hr/>
-                <CheckBoxer caption="Аеропорт прилета" options={this.props.arrivalAirportList}/>
+                <CheckBoxer caption="Аеропорт прилета" changeOuterState={this.changeStateFromInnerElems.bind(this,"arr")} options={this.props.arrivalAirportList}/>
                 <hr/>
-                <TimeFilter caption="Время вылета после" />
+                <TimeFilter default={0} ident={"depT"} step={1} max={24} min={0} changeOuterState={this.changeStateFromInnerElems.bind(this,"depTMin")} caption="Время вылета (после)" />
                 <hr/>
-                <TimeFilter caption="Время прилета после" />
+                <TimeFilter default={0} ident={"arrT"} step={1} max={24} min={0} changeOuterState={this.changeStateFromInnerElems.bind(this,"arrTMin")} caption="Время прилета (после)" />
                 <hr/>
-                <TimeFilter caption="Макс.час польоту" />
+                <TimeFilter default={24} ident={"maxT"} step={1} max={24} min={1} changeOuterState={this.changeStateFromInnerElems.bind(this,"durT")} caption="Макс.час польоту" />
             </div>
         );
     }
