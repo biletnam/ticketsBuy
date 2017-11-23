@@ -20,7 +20,7 @@ module.exports = {
                 loader: "babel-loader",
                 exclude: [/node_modules/, /public/],
                 query: {
-                    presets: ["es2015", "react", "stage-0"],
+                    presets: ["es2015", "react", "stage-0", "stage-1"],
                     "plugins": ["emotion"]
                 }
             },
@@ -49,6 +49,6 @@ module.exports = {
                 test: /\.json$/,
                 loader: "json-loader"
             }
-        ]
+        ],
     }
 };
