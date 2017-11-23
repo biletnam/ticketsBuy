@@ -14,11 +14,9 @@ export default class FindFlights extends React.Component {
         };
         this.departureAirportFilter = [];
         this.arrivalAirportFilter = [];
-    }
-    componentDidMount (){
-        Object.keys(this.state.flights).map((flight)=>{
-            if (this.departureAirportFilter.indexOf(flight.airportDeparture) !== -1){ this.departureAirportFilter.push(flight.airportDeparture); }
-            if (this.arrivalAirportFilter.indexOf(flight.airportArrival) !== -1){ this.arrivalAirportFilter.push(flight.airportArrival); }
+        this.state.flights.map((flight)=>{
+            if (this.departureAirportFilter.indexOf(flight.airportDeparture) === -1){ this.departureAirportFilter.push(flight.airportDeparture); }
+            if (this.arrivalAirportFilter.indexOf(flight.airportArrival) === -1){ this.arrivalAirportFilter.push(flight.airportArrival); }
         });
     }
     onChooseFlight(flightId){
@@ -33,9 +31,7 @@ export default class FindFlights extends React.Component {
                             return flight;
                         }
                     });
-                    console.log(newDisplayObj);
                     self.setState({"displayedFlights" : newDisplayObj});
-                    console.log(self.state);
                     alert("К сожалению, билеты на этот рейс закончились. Попробуйте другой рейс.");
                 }
             })
@@ -58,6 +54,7 @@ export default class FindFlights extends React.Component {
         } else {
             return (
                 <div className="findFlightsComponents">
+                    {console.log("FilterBoxFindFlight: "+ this.departureAirportFilter)}
                     <FilterBox handleFilter={this.handleFilter} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
                     { this.state.displayedFlights.map((flight) =>{
                         return (

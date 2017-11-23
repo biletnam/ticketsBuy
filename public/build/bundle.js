@@ -32535,24 +32535,18 @@ var FindFlights = function (_React$Component) {
         };
         _this.departureAirportFilter = [];
         _this.arrivalAirportFilter = [];
+        _this.state.flights.map(function (flight) {
+            if (_this.departureAirportFilter.indexOf(flight.airportDeparture) === -1) {
+                _this.departureAirportFilter.push(flight.airportDeparture);
+            }
+            if (_this.arrivalAirportFilter.indexOf(flight.airportArrival) === -1) {
+                _this.arrivalAirportFilter.push(flight.airportArrival);
+            }
+        });
         return _this;
     }
 
     _createClass(FindFlights, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            Object.keys(this.state.flights).map(function (flight) {
-                if (_this2.departureAirportFilter.indexOf(flight.airportDeparture) !== -1) {
-                    _this2.departureAirportFilter.push(flight.airportDeparture);
-                }
-                if (_this2.arrivalAirportFilter.indexOf(flight.airportArrival) !== -1) {
-                    _this2.arrivalAirportFilter.push(flight.airportArrival);
-                }
-            });
-        }
-    }, {
         key: "onChooseFlight",
         value: function onChooseFlight(flightId) {
             var self = this;
@@ -32565,9 +32559,7 @@ var FindFlights = function (_React$Component) {
                             return flight;
                         }
                     });
-                    console.log(newDisplayObj);
                     self.setState({ "displayedFlights": newDisplayObj });
-                    console.log(self.state);
                     alert("К сожалению, билеты на этот рейс закончились. Попробуйте другой рейс.");
                 }
             }).catch(function (error) {
@@ -32585,7 +32577,7 @@ var FindFlights = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
+            var _this2 = this;
 
             if (this.state.submitted) {
                 return _react2.default.createElement(_LoadingSpinner2.default, null);
@@ -32593,11 +32585,12 @@ var FindFlights = function (_React$Component) {
                 return _react2.default.createElement(
                     "div",
                     { className: "findFlightsComponents" },
+                    console.log("FilterBoxFindFlight: " + this.departureAirportFilter),
                     _react2.default.createElement(_FilterBox2.default, { handleFilter: this.handleFilter, departureAirportList: this.departureAirportFilter, arrivalAirportList: this.arrivalAirportFilter }),
                     this.state.displayedFlights.map(function (flight) {
                         return _react2.default.createElement(_Flight2.default, _extends({
                             key: flight.key,
-                            onChoose: _this3.onChooseFlight.bind(_this3, flight.flightId),
+                            onChoose: _this2.onChooseFlight.bind(_this2, flight.flightId),
                             airportArrival: flight.airportArrival,
                             airportDeparture: flight.airportDeparture,
                             timeDeparture: flight.timeDeparture,
@@ -32670,9 +32663,9 @@ var FilterBox = function (_React$Component) {
                 _react2.default.createElement("hr", null),
                 _react2.default.createElement(_CheckBoxer2.default, { caption: "\u0410\u0435\u0440\u043E\u043F\u043E\u0440\u0442 \u043F\u0440\u0438\u043B\u0435\u0442\u0430", options: this.props.arrivalAirportList }),
                 _react2.default.createElement("hr", null),
-                _react2.default.createElement(_TimeFilter2.default, { caption: "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u043B\u0435\u0442\u0430" }),
+                _react2.default.createElement(_TimeFilter2.default, { caption: "\u0412\u0440\u0435\u043C\u044F \u0432\u044B\u043B\u0435\u0442\u0430 \u043F\u043E\u0441\u043B\u0435" }),
                 _react2.default.createElement("hr", null),
-                _react2.default.createElement(_TimeFilter2.default, { caption: "\u0412\u0440\u0435\u043C\u044F \u043F\u0440\u0438\u043B\u0435\u0442\u0430" }),
+                _react2.default.createElement(_TimeFilter2.default, { caption: "\u0412\u0440\u0435\u043C\u044F \u043F\u0440\u0438\u043B\u0435\u0442\u0430 \u043F\u043E\u0441\u043B\u0435" }),
                 _react2.default.createElement("hr", null),
                 _react2.default.createElement(_TimeFilter2.default, { caption: "\u041C\u0430\u043A\u0441.\u0447\u0430\u0441 \u043F\u043E\u043B\u044C\u043E\u0442\u0443" })
             );
@@ -32716,7 +32709,10 @@ var checkBoxer = function (_React$Component) {
     function checkBoxer(props) {
         _classCallCheck(this, checkBoxer);
 
-        return _possibleConstructorReturn(this, (checkBoxer.__proto__ || Object.getPrototypeOf(checkBoxer)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (checkBoxer.__proto__ || Object.getPrototypeOf(checkBoxer)).call(this, props));
+
+        console.log("checkBoxer: " + _this.props.options);
+        return _this;
     }
 
     _createClass(checkBoxer, [{
@@ -32733,12 +32729,9 @@ var checkBoxer = function (_React$Component) {
                 this.props.options.map(function (option) {
                     return _react2.default.createElement(
                         "label",
-                        null,
-                        _react2.default.createElement(
-                            "input",
-                            { type: "checkbox", name: "checkbox", value: option },
-                            option
-                        )
+                        { key: Math.random() * (100000 - 1) + 1 },
+                        _react2.default.createElement("input", { key: Math.random() * (100000 - 1) + 1, type: "checkbox", name: "checkbox", value: option }),
+                        option
                     );
                 })
             );
