@@ -1,4 +1,5 @@
 import React from "react";
+import Flight from "../FindFlights/Flight";
 
 
 export default class FindFlights extends React.Component {
@@ -6,8 +7,6 @@ export default class FindFlights extends React.Component {
         super(props);
         console.log(this.props.location.state);
         this.state = {
-            "flights": this.props.location.state,
-            "displayedFlights": this.props.location.state,
             "submitted": false
         };
     }
@@ -17,7 +16,20 @@ export default class FindFlights extends React.Component {
 
     render() {
         return (
-            <div>AdditionalInfoCOmponent</div>
+            <div className="additionalInfoComponent">
+                <Flight/>
+                <div className="inputAdditional">
+                    <form>
+                        // TODO rewrire array
+                        for (let i=0; i< this.state.ticketsAmount; i++){
+                            <input placeholder="Имя" name="fName" value={this.state.fName}/>
+                            <input type="text" placeholder="Фамилия" name="sName" value={this.state.sName}/>
+                            <input type="text" placeholer="Паспорт" name="passportId" value={this.state.passportID}/>
+                            <input type="text" placeholer="Паспорт" name="passportId" value={this.state.passportID}/>
+                        }
+                    </form>
+                </div>
+            </div>
         );
     }
 }
