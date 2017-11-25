@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import LoadingSpinner from "../StartPage/LoadingSpinner.jsx";
 
 
 export default class FindFlights extends React.Component {
@@ -7,6 +8,7 @@ export default class FindFlights extends React.Component {
         super(props);
         console.log(this.props.location.state);
         this.state = {
+            "agreement": false,
             "submitted": false,
             "passengers":[]
         };
@@ -29,12 +31,16 @@ export default class FindFlights extends React.Component {
             "passengers": curPasState
         },()=> console.log(this.state));
     }
-
+    _checkBoxChange(){
+        this.setState({
+            "agreement": !this.state.agree
+        });
+    }
     _checkAllFiedls() {
         let AllFieldsInputted = true;
         for(let i=0; i< this.state.passengers ; i++){
             let cur = this.state.passengers[i];
-            if (!cur.fName || !cur.sName || !cur.birthday || !cur.passportID || cur.email || cur.tel){
+            if (!cur.fName || !cur.sName || !cur.birthday || !cur.passportId || !cur.email || !cur.tel){
                 AllFieldsInputted = false;
                 break;
             }
@@ -86,9 +92,11 @@ export default class FindFlights extends React.Component {
                             <input type="text" name="passportId" key={i + "passportId"} onChange={this.onChangeInput.bind(this, i)} value={this.state.passengers[i].passportID}/>
                         </div>
                         <div className="block">
+                            <label>Email</label>
                             <input type="email" name="email" key={i + "email"} onChange={this.onChangeInput.bind(this, i)} value={this.state.passengers[i].email}/>
                         </div>
                         <div className="block">
+                            <label>Контактный телефон</label>
                             <input type="tel" name="tel" key={i + "tel"} onChange={this.onChangeInput.bind(this, i)} value={this.state.passengers[i].tel}/>
                         </div>
                     </div>
@@ -96,15 +104,22 @@ export default class FindFlights extends React.Component {
             );
         }
         if (this.state.submitted) {
-            return <LoadingSpinner/>;
+            return( <div className="additionalInfoComponent">
+                <div className="passengersList">
+                    {passengersInput}
+                </div>
+                <label><input type="checkbox" checked={this.state.agreement} onChange={this._checkBoxChange.bind(this)} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
+                <input type="button" value="Дальше" onClick={this._nextButtonClicked.bind(this)}/>
+                <LoadingSpinner/>
+            </div> );
         } else {
             return (
                 <div className="additionalInfoComponent">
                     <div className="passengersList">
                         {passengersInput}
                     </div>
-                    <label><input type="checkbox" checked={this.state.agreement} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
-                    <input type="button" name="Дальше" onClick={this._nextButtonClicked}/>
+                    <label><input type="checkbox" checked={this.state.agreement} onChange={this._checkBoxChange.bind(this)} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
+                    <input type="button" value="Дальше" onClick={this._nextButtonClicked.bind(this)}/>
                 </div>
             );
         }
