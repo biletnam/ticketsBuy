@@ -24,6 +24,7 @@ export default class FindFlights extends React.Component {
         axios.post("/checkFlightById", {"flightId": flightId})
             .then(response => {
                 if (response.data.canBeBooked){
+                    response.data.personAmount = self.props.location.state.personAmount;
                     self.props.history.push("/additionalInfo" , response.data);
                 } else {
                     let newDisplayObj  = self.state.displayedFlights.filter(function(flight) {

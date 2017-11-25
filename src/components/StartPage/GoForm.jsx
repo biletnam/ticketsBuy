@@ -14,18 +14,18 @@ export default class GoForm extends React.Component {
             "dateBack": "",
             "personAmount": ""
         };
-        self.state = this.state;
     }
     _inputChange(event){
         this.setState({
             [event.target.name]: event.target.value
-
         });
     }
-    handleSubmitButton(callback){
+    handleSubmitButton(){
+        let self = this;
         axios.post("/findAvailableFlights", self.state)
             .then(response => {
-                callback(response.data);
+                response.data.personAmount = self.state.personAmount;
+                this.props.history.push("/findFlights", response.data);
             })
             .catch(error => {
                 throw new Error("GoForm:handleSubmitButton: " + error.message);
@@ -40,7 +40,7 @@ export default class GoForm extends React.Component {
                     <input name="dateFrom" type="date" value={this.state.dateFrom} onChange={this._inputChange.bind(this)}  className="dateFrom" />
                     <input name="dateBack" type="date" value={this.state.dateBack} onChange={this._inputChange.bind(this)} className="dateBack"/>
                     <input name="personAmount" type="number" value={this.state.personAmount} onChange={this._inputChange.bind(this)} className="personAmount" />
-                    <GoButton name="Подобрать" link="/findFlights" onButtonClick={this.handleSubmitButton} {...this.props} />
+                    <GoButton name="Подобрать" onButtonClick={this.handleSubmitButton.bind(this)} {...this.props} />
                 </form>
             </div>
         );

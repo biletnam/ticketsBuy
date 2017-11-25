@@ -8,10 +8,7 @@ export default class GoButton extends React.Component {
     }
     _goWaiter(e){
         e.preventDefault();
-        this.setState({"submitted": true});
-        this.props.onButtonClick((res)=>{
-            this.props.history.push(this.props.link, res);
-        });
+        this.setState({"submitted": true},this.props.onButtonClick);
     }
     render() {
         if (this.state.submitted) {
