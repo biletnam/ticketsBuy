@@ -60,3 +60,4 @@ typings/
 # Webstorm idea
 .idea
 
+/public/pdf/
