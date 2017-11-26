@@ -3,9 +3,10 @@ import axios from "axios";
 import LoadingSpinner from "../StartPage/LoadingSpinner.jsx";
 
 
-export default class AdditionalInfo extends React.Component {
+export default class FindFlights extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props.location.state);
         this.state = {
             "agreement": false,
             "submitted": false,
@@ -28,7 +29,7 @@ export default class AdditionalInfo extends React.Component {
         curPasState[Id][event.target.name] = event.target.value;
         this.setState({
             "passengers": curPasState
-        });
+        },()=> console.log(this.state));
     }
     _checkBoxChange(){
         this.setState({
@@ -47,22 +48,16 @@ export default class AdditionalInfo extends React.Component {
         return AllFieldsInputted;
     }
     _nextButtonClicked() {
-        let self = this;
         if (this._checkAllFiedls && this.state.agreement) {
             this.setState({
                 "submitted":true
             });
-            let sendObj = {
-                "passengers" : this.state.passengers,
-                "flight": this.props.location.state
-            };
-            console.log(sendObj);
-            axios.post("/sendPassengerData", sendObj)
+            axios.post("/sendPassengerData", this.state.passengers)
                 .then(response => {
-                    if (response.data.bookedSuccessfully){
+                    if (response.data.bookedSuccessful){
                         self.props.history.push("/success" , response.data);
                     } else {
-                        self.props.history.push("/failed");
+                        self.props.history.push("/failed" , response.data);
                     }
                 })
                 .catch(error => {
