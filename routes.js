@@ -1,4 +1,5 @@
 "use strict";
+let generatePDF = require("./generatePDF");
 module.exports = function (app) {
 
     app.get("/", function(req, res){
@@ -53,4 +54,29 @@ module.exports = function (app) {
         });
     });
 
+    app.post("/sendPassengerData", (req,res)=> {
+        // TODO update query to database
+        let bookingId = generateRandomNumber(100000,0);
+        let tickets = [];
+        for (let i = 0; i < req.body.flight.personAmount ; i++){
+            tickets[i] = generateRandomNumber(10000000000, 0);
+        }
+        generatePDF(bookingId,tickets,req)
+            .then( ()=> {
+                res.json({
+                    "bookedSuccessfully" : true,
+                    "bookingId" : bookingId
+                });
+            })
+            .catch( (err)=> {
+                if (err) console.log(err);
+            });
+
+    });
+
+
 };
+
+function generateRandomNumber(max,min) {
+    return Math.floor(Math.random() * (max - min) + min);
+}

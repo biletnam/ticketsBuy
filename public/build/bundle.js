@@ -24215,6 +24215,14 @@ var _AdditionalInfo = __webpack_require__(306);
 
 var _AdditionalInfo2 = _interopRequireDefault(_AdditionalInfo);
 
+var _Failed = __webpack_require__(307);
+
+var _Failed2 = _interopRequireDefault(_Failed);
+
+var _Success = __webpack_require__(308);
+
+var _Success2 = _interopRequireDefault(_Success);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24225,8 +24233,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 /*
 import Tickets from "./components/Tickets/Tickets.jsx";
-import Success from "./components/EndPage/Success.jsx";
-import Failed from "./components/EndPage/Failed.jsx";
 import NotFound from "./components/NotFound.jsx";
 */
 
@@ -24257,7 +24263,9 @@ var App = function (_React$Component) {
                             null,
                             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _StartPage2.default }),
                             _react2.default.createElement(_reactRouterDom.Route, { path: "/findFlights", component: _FindFlights2.default }),
-                            _react2.default.createElement(_reactRouterDom.Route, { path: "/additionalInfo", component: _AdditionalInfo2.default })
+                            _react2.default.createElement(_reactRouterDom.Route, { path: "/additionalInfo", component: _AdditionalInfo2.default }),
+                            _react2.default.createElement(_reactRouterDom.Route, { path: "/success", component: _Success2.default }),
+                            _react2.default.createElement(_reactRouterDom.Route, { path: "/failed", component: _Failed2.default })
                         )
                     )
                 )
@@ -40611,15 +40619,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var FindFlights = function (_React$Component) {
-    _inherits(FindFlights, _React$Component);
+var AdditionalInfo = function (_React$Component) {
+    _inherits(AdditionalInfo, _React$Component);
 
-    function FindFlights(props) {
-        _classCallCheck(this, FindFlights);
+    function AdditionalInfo(props) {
+        _classCallCheck(this, AdditionalInfo);
 
-        var _this = _possibleConstructorReturn(this, (FindFlights.__proto__ || Object.getPrototypeOf(FindFlights)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (AdditionalInfo.__proto__ || Object.getPrototypeOf(AdditionalInfo)).call(this, props));
 
-        console.log(_this.props.location.state);
         _this.state = {
             "agreement": false,
             "submitted": false,
@@ -40638,17 +40645,13 @@ var FindFlights = function (_React$Component) {
         return _this;
     }
 
-    _createClass(FindFlights, [{
+    _createClass(AdditionalInfo, [{
         key: "onChangeInput",
         value: function onChangeInput(Id, event) {
-            var _this2 = this;
-
             var curPasState = this.state.passengers;
             curPasState[Id][event.target.name] = event.target.value;
             this.setState({
                 "passengers": curPasState
-            }, function () {
-                return console.log(_this2.state);
             });
         }
     }, {
@@ -40674,15 +40677,21 @@ var FindFlights = function (_React$Component) {
     }, {
         key: "_nextButtonClicked",
         value: function _nextButtonClicked() {
+            var self = this;
             if (this._checkAllFiedls && this.state.agreement) {
                 this.setState({
                     "submitted": true
                 });
-                _axios2.default.post("/sendPassengerData", this.state.passengers).then(function (response) {
-                    if (response.data.bookedSuccessful) {
+                var sendObj = {
+                    "passengers": this.state.passengers,
+                    "flight": this.props.location.state
+                };
+                console.log(sendObj);
+                _axios2.default.post("/sendPassengerData", sendObj).then(function (response) {
+                    if (response.data.bookedSuccessfully) {
                         self.props.history.push("/success", response.data);
                     } else {
-                        self.props.history.push("/failed", response.data);
+                        self.props.history.push("/failed");
                     }
                 }).catch(function (error) {
                     throw new Error("AdditionalInfo:nextButtonClicked: " + error.message);
@@ -40815,10 +40824,146 @@ var FindFlights = function (_React$Component) {
         }
     }]);
 
-    return FindFlights;
+    return AdditionalInfo;
 }(_react2.default.Component);
 
-exports.default = FindFlights;
+exports.default = AdditionalInfo;
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Failed = function (_React$Component) {
+    _inherits(Failed, _React$Component);
+
+    function Failed(props) {
+        _classCallCheck(this, Failed);
+
+        return _possibleConstructorReturn(this, (Failed.__proto__ || Object.getPrototypeOf(Failed)).call(this, props));
+    }
+
+    _createClass(Failed, [{
+        key: "_nextButtonClicked",
+        value: function _nextButtonClicked() {
+            this.props.history.push("/");
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                { className: "failedPageComponent" },
+                _react2.default.createElement("img", { src: "/images/failed.png", alt: "FailedPng" }),
+                _react2.default.createElement(
+                    "h1",
+                    null,
+                    "\u0427\u0442\u043E-\u0442\u043E \u043F\u043E\u0448\u043B\u043E \u043D\u0435 \u0442\u0430\u043A"
+                ),
+                _react2.default.createElement("input", { type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430\u0437\u0430\u0434", onClick: this._nextButtonClicked.bind(this) })
+            );
+        }
+    }]);
+
+    return Failed;
+}(_react2.default.Component);
+
+exports.default = Failed;
+
+/***/ }),
+/* 308 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Success = function (_React$Component) {
+    _inherits(Success, _React$Component);
+
+    function Success(props) {
+        _classCallCheck(this, Success);
+
+        var _this = _possibleConstructorReturn(this, (Success.__proto__ || Object.getPrototypeOf(Success)).call(this, props));
+
+        _this.successData = _this.props.location.state;
+        console.log(_this.successData);
+        return _this;
+    }
+
+    _createClass(Success, [{
+        key: "_nextButtonClicked",
+        value: function _nextButtonClicked() {
+            this.props.history.push("/");
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var pdfPath = "/pdf/" + this.successData.bookingId + ".pdf#zoom=85&scrollbar=0&toolbar=0&navpanes=0";
+            return _react2.default.createElement(
+                "div",
+                { className: "SuccessPageComponent" },
+                _react2.default.createElement("img", { src: "/images/success.png", alt: "SuccessPng" }),
+                _react2.default.createElement(
+                    "h2",
+                    null,
+                    "\u0412\u0430\u0448\u0438 \u0431\u0438\u043B\u0435\u0442\u044B \u0433\u043E\u0442\u043E\u0432\u044B"
+                ),
+                _react2.default.createElement(
+                    "object",
+                    { width: "100%", height: "500", type: "application/pdf", data: pdfPath, id: "pdf_content" },
+                    _react2.default.createElement(
+                        "p",
+                        null,
+                        "PDF cannot be displayed."
+                    )
+                ),
+                _react2.default.createElement("input", { type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430 \u0433\u043B\u0430\u0432\u043D\u0443\u044E", onClick: this._nextButtonClicked.bind(this) })
+            );
+        }
+    }]);
+
+    return Success;
+}(_react2.default.Component);
+
+exports.default = Success;
 
 /***/ })
 /******/ ]);
