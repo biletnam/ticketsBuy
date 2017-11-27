@@ -32,7 +32,7 @@ function generateBarcode(ticketsId, callback) {
                     if (err) {
                         reject();
                     } else {
-                        let writeImg = path.join(__dirname, `/../public/pdf/ticketsBarcode/${ticketsId[i]}.png`);
+                        let writeImg = path.join(__dirname, `../public/pdf/ticketsBarcode/${ticketsId[i]}.png`);
                         fs.writeFile(writeImg, png, function (err) {
                             if (err) reject();
                             resolve();
@@ -53,11 +53,11 @@ function generateBarcode(ticketsId, callback) {
 function generatePDF(bookingId, ticketsId, request,callback) {
     const PDFDocument = require("pdfkit");
     const doc = new PDFDocument();
-    let pipePath = path.join(__dirname, `/../public/pdf/${bookingId}.pdf`);
+    let pipePath = path.join(__dirname, `../public/pdf/${bookingId}.pdf`);
     let writeStream = fs.createWriteStream(pipePath);
     doc.pipe(writeStream);
     let passengers = request.body.passengers;
-    doc.registerFont("Raleway", path.join(__dirname, "/../public/fonts/Raleway-Regular.ttf"));
+    doc.registerFont("Raleway", path.join(__dirname, "../public/fonts/Raleway-Regular.ttf"));
     let {airportArrival, airportDeparture, cityArrival, cityDeparture, flightId, timeArrival, timeDeparture} = request.body.flight;
     timeDeparture = (+timeDeparture.split(":")[0] - 1 === -1) ? "23" + timeDeparture.split(":")[1] : (+timeDeparture.split(":")[0] - 1) + ":" + timeDeparture.split(":")[1];
     for (let i = 0; i < ticketsId.length; i++) {
@@ -69,7 +69,7 @@ function generatePDF(bookingId, ticketsId, request,callback) {
         doc.fontSize(20);
         doc.font("Helvetica")
             .text("Boarding Pass", 50, 48);
-        let imgPath = path.join(__dirname, `/../public/pdf/ticketsBarcode/${ticketsId[i]}.png`);
+        let imgPath = path.join(__dirname, `../public/pdf/ticketsBarcode/${ticketsId[i]}.png`);
         doc.image(imgPath, 460, 42);
         doc.fontSize(12);
         doc.font("Helvetica")

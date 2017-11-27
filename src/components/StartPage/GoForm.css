@@ -1,0 +1,67 @@
+
+.GoForm{
+    text-align: center;
+    margin-top:3em;
+}
+
+.GoForm form{
+    word-spacing: normal;
+    vertical-align: top;
+    text-rendering: auto;
+}
+.GoForm input[type=text]:first-child{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.GoForm input[type=number]{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0; /* Removes leftover margin */
+}
+
+.inputFrom, .inputWhere,.dateFrom, .dateBack,.personAmount{
+    font-family: "Lato",serif;
+    padding:0 0 0 3.5vw;
+    border: 1px solid black;
+    vertical-align:top;
+    width:30vh;
+    height: 7vh;
+    box-sizing: border-box;
+    background-color: white;
+    background-position: 10px 1.2vh;
+    background-repeat: no-repeat;
+    background-size: 1.3vw 4vh;
+}
+.inputFrom, .inputWhere{
+    background-image: url("/images/locationInp.png");
+
+}
+.dateFrom, .dateBack {
+    background-image: url("/images/calendarInp.png");
+    background-size: 2vw 4vh;
+    font-size:2vh;
+    line-size:2vh;
+}
+.personAmount{
+    background-image: url("/images/humanInp.png");
+
+}
+.GoForm input:last-child, .sweet-loading{
+    margin:10vh auto;
+}
+.SubmitButton{
+    border: 1px solid black;
+    vertical-align:top;
+    padding: 8px 15px;
+    text-transform: uppercase;
+    font-family: 'Lato', serif;
+    font-size:3vh;
+    color:#fff;
+    background-color: #fb5332;
+    border-radius: 20px;
+    text-align: center;
+    cursor:pointer;
+}

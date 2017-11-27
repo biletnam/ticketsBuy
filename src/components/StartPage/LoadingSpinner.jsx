@@ -12,7 +12,7 @@ export default class LoadingSpinner extends React.Component {
         return (
             <div className="sweet-loading">
                 <PulseLoader
-                    color={"#123abc"}
+                    color={"#fb5332"}
                     loading={this.state.loading}
                 />
             </div>

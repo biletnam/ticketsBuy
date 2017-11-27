@@ -17,7 +17,7 @@ export default class GoButton extends React.Component {
             return <LoadingSpinner/>;
         } else {
             return (
-                <input value={this.props.name} type="submit" onClick={this._goWaiter.bind(this)}/>
+                <input className="SubmitButton" value={this.props.name} type="submit" onClick={this._goWaiter.bind(this)}/>
             );
         }
     }

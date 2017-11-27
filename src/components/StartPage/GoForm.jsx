@@ -2,7 +2,7 @@ import React from "react";
 import GoButton from "./GoButton.jsx";
 
 import axios from "axios";
-
+import "./GoForm.css";
 
 export default class GoForm extends React.Component {
     constructor(props) {
@@ -76,14 +76,14 @@ export default class GoForm extends React.Component {
 
     render() {
         return (
-            <div className="GoForm">
+            <div className="GoForm col-100">
                 <form>
                     <input name="inputFrom" type="text" value={this.state.inputFrom} onChange={this._inputChange.bind(this)} placeholder="Откуда" className="inputFrom"/>
                     <input name="inputWhere" type="text" value={this.state.inputWhere} onChange={this._inputChange.bind(this)} placeholder="Куда" className="inputWhere"/>
                     <input name="dateFrom" type="date" value={this.state.dateFrom} onChange={this._inputChange.bind(this)} className="dateFrom"/>
                     <input name="dateBack" type="date" value={this.state.dateBack} onChange={this._inputChange.bind(this)} className="dateBack"/>
                     <input name="personAmount" type="number" value={this.state.personAmount} onChange={this._inputChange.bind(this)} className="personAmount"/>
-                    <GoButton name="Подобрать" getSubmitted={this.getSubmitted.bind(this)} onButtonClick={this.handleSubmitButton.bind(this)} {...this.props} />
+                    <GoButton className="col-100" name="Подобрать" getSubmitted={this.getSubmitted.bind(this)} onButtonClick={this.handleSubmitButton.bind(this)} {...this.props} />
                 </form>
             </div>
         );

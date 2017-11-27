@@ -1,6 +1,8 @@
 import React from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 
+import "./App.css";
+
 import Menu from "./components/Menu.jsx";
 import StartPage from "./components/StartPage/StartPage.jsx";
 import FindFlights from "./components/FindFlights/FindFlights.jsx";
@@ -23,7 +25,7 @@ export default class App extends React.Component {
         return (
             <BrowserRouter>
                 <div className="app">
-                    <Menu/>
+                    <Menu className="MenuComponent"/>
                     <div className="appBodyDiv">
                         <Switch>
                             <Route exact path="/" component={StartPage}/>

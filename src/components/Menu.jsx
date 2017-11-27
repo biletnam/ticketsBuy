@@ -7,10 +7,10 @@ export default class Menu extends React.Component {
         return (
             <header className="headerMenu">
                 <ul className="main-nav">
-                    <li><Link to="/">Билеты</Link></li>
-                    <li><a href="#">Табло</a></li>
-                    <li><a href="#">Гостинницы</a></li>
-                    <li><Link to="/signIn">Войти</Link></li>
+                    <li><Link to="/">БИЛЕТЫ</Link></li>
+                    <li><a href="#">ТАБЛО</a></li>
+                    <li><a href="#">ГОСТИННИЦЫ</a></li>
+                    <li className="rightEnter"><Link to="/signIn">ВОЙТИ</Link></li>
                 </ul>
             </header>
         );
