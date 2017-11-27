@@ -22,7 +22,27 @@ export default class AdditionalInfo extends React.Component {
             };
         }
     }
-
+    componentDidMount() {
+        let Passengers = JSON.parse(localStorage.getItem("passengers"));
+        if (Passengers){
+            let copyState = this.state.passengers;
+            if (Passengers.length > this.props.location.state.personAmount) {
+                Passengers = Passengers.slice(0, this.props.location.state.personAmount);
+            } else if (Passengers.length < this.props.location.state.personAmount){
+                let args = [0, Passengers.length].concat(Passengers);
+                Array.prototype.splice.apply(copyState, args);
+                Passengers = copyState;
+            }
+            this.setState({"passengers" : Passengers});
+        }
+    }
+    componentDidUpdate() {
+        this._updateLocalStorage();
+    }
+    _updateLocalStorage(){
+        var passengers = JSON.stringify(this.state.passengers);
+        localStorage.setItem("passengers", passengers);
+    }
     onChangeInput(Id, event) {
         let curPasState = this.state.passengers;
         curPasState[Id][event.target.name] = event.target.value;
@@ -32,7 +52,7 @@ export default class AdditionalInfo extends React.Component {
     }
     _checkBoxChange(){
         this.setState({
-            "agreement": !this.state.agree
+            "agreement": !this.state.agreement
         });
     }
     _checkAllFiedls() {
@@ -94,7 +114,7 @@ export default class AdditionalInfo extends React.Component {
                         </div>
                         <div className="block">
                             <label>Паспорт</label>
-                            <input type="text" name="passportId" key={i + "passportId"} onChange={this.onChangeInput.bind(this, i)} value={this.state.passengers[i].passportID}/>
+                            <input type="text" name="passportId" key={i + "passportId"} onChange={this.onChangeInput.bind(this, i)} value={this.state.passengers[i].passportId}/>
                         </div>
                         <div className="block">
                             <label>Email</label>

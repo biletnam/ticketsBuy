@@ -28057,9 +28057,10 @@ var GoForm = function (_React$Component) {
         _this.state = {
             "inputFrom": "",
             "inputWhere": "",
-            "dateFrom": new Date().getFullYear() + "-" + new Date().getMonth() + "-" + (new Date().getDate() + 1),
+            "dateFrom": new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
             "dateBack": "",
-            "personAmount": ""
+            "personAmount": "",
+            "submitted": false
         };
         return _this;
     }
@@ -28070,17 +28071,64 @@ var GoForm = function (_React$Component) {
             this.setState(_defineProperty({}, event.target.name, event.target.value));
         }
     }, {
+        key: "checkFormInputed",
+        value: function checkFormInputed() {
+            return this.state.inputFrom && this.state.inputWhere && this.state.dateFrom && this.state.dateBack && this.state.personAmount;
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var FlightData = JSON.parse(localStorage.getItem("flightWish"));
+            if (FlightData) {
+                this.setState({
+                    "inputFrom": FlightData.inputFrom,
+                    "inputWhere": FlightData.inputWhere,
+                    "dateFrom": FlightData.dateFrom,
+                    "dateBack": FlightData.dateBack,
+                    "personAmount": FlightData.personAmount
+                });
+            }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+            this._updateLocalStorage();
+        }
+    }, {
+        key: "_updateLocalStorage",
+        value: function _updateLocalStorage() {
+            var obj = {
+                "inputFrom": this.state.inputFrom,
+                "inputWhere": this.state.inputWhere,
+                "dateFrom": this.state.dateFrom,
+                "dateBack": this.state.dateBack,
+                "personAmount": this.state.personAmount
+            };
+            var JsonFlight = JSON.stringify(obj);
+            localStorage.setItem("flightWish", JsonFlight);
+        }
+    }, {
         key: "handleSubmitButton",
-        value: function handleSubmitButton() {
+        value: function handleSubmitButton(callback) {
             var _this2 = this;
 
             var self = this;
-            _axios2.default.post("/findAvailableFlights", self.state).then(function (response) {
-                response.data.personAmount = self.state.personAmount;
-                _this2.props.history.push("/findFlights", response.data);
-            }).catch(function (error) {
-                throw new Error("GoForm:handleSubmitButton: " + error.message);
-            });
+            if (this.checkFormInputed()) {
+                callback();
+                _axios2.default.post("/findAvailableFlights", self.state).then(function (response) {
+                    response.data.personAmount = self.state.personAmount;
+                    _this2.props.history.push("/findFlights", response.data);
+                }).catch(function (error) {
+                    throw new Error("GoForm:handleSubmitButton: " + error.message);
+                });
+            } else {
+                alert("Некоторые поля не были заполнены :(");
+            }
+        }
+    }, {
+        key: "getSubmitted",
+        value: function getSubmitted() {
+            return this.state.submitted;
         }
     }, {
         key: "render",
@@ -28096,7 +28144,7 @@ var GoForm = function (_React$Component) {
                     _react2.default.createElement("input", { name: "dateFrom", type: "date", value: this.state.dateFrom, onChange: this._inputChange.bind(this), className: "dateFrom" }),
                     _react2.default.createElement("input", { name: "dateBack", type: "date", value: this.state.dateBack, onChange: this._inputChange.bind(this), className: "dateBack" }),
                     _react2.default.createElement("input", { name: "personAmount", type: "number", value: this.state.personAmount, onChange: this._inputChange.bind(this), className: "personAmount" }),
-                    _react2.default.createElement(_GoButton2.default, _extends({ name: "\u041F\u043E\u0434\u043E\u0431\u0440\u0430\u0442\u044C", onButtonClick: this.handleSubmitButton.bind(this) }, this.props))
+                    _react2.default.createElement(_GoButton2.default, _extends({ name: "\u041F\u043E\u0434\u043E\u0431\u0440\u0430\u0442\u044C", getSubmitted: this.getSubmitted.bind(this), onButtonClick: this.handleSubmitButton.bind(this) }, this.props))
                 )
             );
         }
@@ -28144,15 +28192,19 @@ var GoButton = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (GoButton.__proto__ || Object.getPrototypeOf(GoButton)).call(this, props));
 
-        _this.state = { "submitted": false };
+        _this.state = { "submitted": _this.props.getSubmitted() };
         return _this;
     }
 
     _createClass(GoButton, [{
         key: "_goWaiter",
         value: function _goWaiter(e) {
+            var _this2 = this;
+
             e.preventDefault();
-            this.setState({ "submitted": true }, this.props.onButtonClick);
+            this.props.onButtonClick(function () {
+                _this2.setState({ "submitted": !_this2.state.submitted });
+            });
         }
     }, {
         key: "render",
@@ -40646,6 +40698,33 @@ var AdditionalInfo = function (_React$Component) {
     }
 
     _createClass(AdditionalInfo, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var Passengers = JSON.parse(localStorage.getItem("passengers"));
+            if (Passengers) {
+                var copyState = this.state.passengers;
+                if (Passengers.length > this.props.location.state.personAmount) {
+                    Passengers = Passengers.slice(0, this.props.location.state.personAmount);
+                } else if (Passengers.length < this.props.location.state.personAmount) {
+                    var args = [0, Passengers.length].concat(Passengers);
+                    Array.prototype.splice.apply(copyState, args);
+                    Passengers = copyState;
+                }
+                this.setState({ "passengers": Passengers });
+            }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+            this._updateLocalStorage();
+        }
+    }, {
+        key: "_updateLocalStorage",
+        value: function _updateLocalStorage() {
+            var passengers = JSON.stringify(this.state.passengers);
+            localStorage.setItem("passengers", passengers);
+        }
+    }, {
         key: "onChangeInput",
         value: function onChangeInput(Id, event) {
             var curPasState = this.state.passengers;
@@ -40658,7 +40737,7 @@ var AdditionalInfo = function (_React$Component) {
         key: "_checkBoxChange",
         value: function _checkBoxChange() {
             this.setState({
-                "agreement": !this.state.agree
+                "agreement": !this.state.agreement
             });
         }
     }, {
@@ -40760,7 +40839,7 @@ var AdditionalInfo = function (_React$Component) {
                                 null,
                                 "\u041F\u0430\u0441\u043F\u043E\u0440\u0442"
                             ),
-                            _react2.default.createElement("input", { type: "text", name: "passportId", key: i + "passportId", onChange: this.onChangeInput.bind(this, i), value: this.state.passengers[i].passportID })
+                            _react2.default.createElement("input", { type: "text", name: "passportId", key: i + "passportId", onChange: this.onChangeInput.bind(this, i), value: this.state.passengers[i].passportId })
                         ),
                         _react2.default.createElement(
                             "div",
