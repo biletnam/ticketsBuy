@@ -1,7 +1,7 @@
 import React from "react";
 import CheckBoxer from "./CheckBoxer.jsx";
 import TimeFilter from "./TimeFilter.jsx";
-
+import "./FilterBox.css";
 
 export default class FilterBox extends React.Component {
     constructor(props) {

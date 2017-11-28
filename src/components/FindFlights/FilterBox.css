@@ -1,0 +1,57 @@
+
+
+.FilterBoxComponent{
+    margin-top:10vh;
+    float:left;
+    top:25vh;
+    min-width:20vw;
+    max-width:25vw;
+    background-color:#f8f8f8;
+    font-size: 1.8vh;
+}
+
+.checkBoxComponent{
+    margin: 1vh 0 0 1vw;
+    display:flex;
+    flex-direction: column;
+}
+.checkBoxComponent>h2{
+    margin: 1vh 0 3vh 0;
+}
+.checkBoxComponent label{
+    margin: 0 2vw 1vh 0;
+}
+.checkBoxComponent label:last-child{
+    margin-bottom:3vh;
+}
+.checkBoxComponent>label>input {
+    margin-right: 0.7vw;
+}
+
+input[type='checkbox']{
+    width:1.5vh;
+    height:1.5vh;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance:none;
+    outline: 1px solid #fb5332;
+    box-shadow: none;
+    font-size: 2em;
+}
+
+input[type='checkbox']:checked{
+    background-color: #ff5332;
+    outline: 1px solid #666;
+}
+
+.timeFilterComponent{
+    margin: 1vh 0 0 1vw;
+    width:80%;
+}
+.timeFilterComponent>h2{
+    margin: 1vh 0 3vh 0;
+}
+.slider {
+    margin-bottom:-30px;
+}

@@ -59,7 +59,7 @@ export default class FindFlights extends React.Component {
         } else {
             return (
                 <div className="findFlightsComponents">
-                    <FilterBox handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
+                    <FilterBox className="col-60" handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
                     { this.state.displayedFlights.map((flight) =>{
                         return (
                             <Flight

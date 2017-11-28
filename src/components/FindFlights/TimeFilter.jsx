@@ -6,9 +6,7 @@ import Slider from "material-ui/Slider";
 
 const muiTheme = getMuiTheme({
     palette: {
-        primary1Color: green500,
-        primary2Color: green700,
-        primary3Color: green100,
+        primary1Color: "#ff5332",
     },
 }, {
     avatar: {
@@ -35,7 +33,7 @@ export default class TimeFilter extends React.Component {
             <div className="timeFilterComponent">
                 <h2>{this.props.caption}</h2>
                 <MuiThemeProvider muiTheme={muiTheme}>
-                    <Slider min={this.props.min} value={this.state[this.props.ident]} max={this.props.max} step={this.props.step} onChange={this.handleTimeFilter.bind(this)}/>
+                    <Slider className="slider" min={this.props.min} value={this.state[this.props.ident]} max={this.props.max} step={this.props.step} onChange={this.handleTimeFilter.bind(this)}/>
                 </MuiThemeProvider>
             </div>
         );

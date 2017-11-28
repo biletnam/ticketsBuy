@@ -1,10 +1,12 @@
-body{
-    margin:0;
+*{
+    margin:0 auto;
     padding:0;
-    min-height:100vh;
     font: 16px "Lato";
+    box-sizing:border-box;
+}
+body{
+    min-height:100vh;
     max-width:100%;
-    overflow: hidden;
 }
 
 
@@ -25,7 +27,13 @@ body{
 }
 
 .col-100{
-    width:100%
+    width:100%;
+}
+.col-40{
+    width:40%;
+}
+.col-60{
+    width:60%;
 }
 
 .app{
@@ -45,16 +53,15 @@ header>ul{
     list-style: none;
     height:100%;
     display:flex;
-    align-items: center;
     justify-content: flex-start;
+    align-items: center;
+}
+.main-nav li{
+    margin: 0 3em 0 3em;
 }
 
-.main-nav li {
-    font-size: 1.2em;
-    margin: 0 1.7em;
-}
 .main-nav li:first-child{
-    margin: 0 1.7em 0 0.5vw;
+    margin: 0 1.7em 0 3em;
 }
 .main-nav li:last-child{
     margin-left: auto;
@@ -65,7 +72,6 @@ header>ul{
     text-decoration: none;
     color:#000;
     font-size:2.5vh;
-    padding-bottom: 20px;
 }
 .main-nav a:after{
     content: '';

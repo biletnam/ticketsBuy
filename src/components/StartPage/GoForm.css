@@ -43,7 +43,7 @@
     background-image: url("/images/calendarInp.png");
     background-size: 2vw 4vh;
     font-size:2vh;
-    line-size:2vh;
+    line-height:2vh;
 }
 .personAmount{
     background-image: url("/images/humanInp.png");
