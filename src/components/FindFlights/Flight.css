@@ -1,5 +1,6 @@
 .AllFlights {
-    float:left
+    float:left;
+
 }
 .FlightComponent{
     width:70vw;
@@ -8,6 +9,13 @@
     background: #f8f8f8;
     display:flex;
     flex-direction: column;
+}
+.FlightComponentAdditional{
+    width:70vw;
+    display:flex;
+    justify-content:center;
+    margin-top:10vh;
+    background: #f8f8f8;
 }
 
 .flightInfo{

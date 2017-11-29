@@ -4,9 +4,6 @@
     font: 16px "Lato";
     box-sizing:border-box;
 }
-body{
-    min-height:100vh;
-}
 
 
 @font-face {
@@ -39,14 +36,13 @@ body{
     width:100%;
 }
 .appBodyDiv{
+    overflow:auto;
     background: #dee9f1;
-    height:90vh;
-}
-.MenuComponent{
+    min-height:90vh;
 }
 
 header{
-    height:10vh;
+    height:9.5vh;
 }
 header>ul{
     list-style: none;

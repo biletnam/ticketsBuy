@@ -1,12 +1,12 @@
 import React from "react";
 import "./Flight.css";
+
 export default class Flight extends React.Component {
     constructor(props) {
         super(props);
         this.deltaTime = new Date(new Date(2000,1,25,this.props.timeArrival.split(":")[0],this.props.timeArrival.split(":")[1]) -
             new Date(2000,1,25,this.props.timeDeparture.split(":")[0],this.props.timeDeparture.split(":")[1]));
         this.deltaTimeStr = `${("0" + (this.deltaTime.getHours()-2)).slice(-2)}:${("0" + this.deltaTime.getMinutes()).slice(-2)}`;
-        console.log(this.props);
     }
     render() {
         let ticketsAvailText = null;
@@ -15,8 +15,14 @@ export default class Flight extends React.Component {
         } else {
             ticketsAvailText =  <p>{this.props.ticketsAvailable}</p>;
         }
+        let firstClassInstance = "FlightComponent";
+        let price = "Цена Билета";
+        if (this.props.additionalPage){
+            firstClassInstance = "FlightComponentAdditional";
+            price = "Сумма к оплате";
+        }
         return (
-            <div className="FlightComponent" onClick={this.props.onChoose}>
+            <div className={firstClassInstance} onClick={this.props.onChoose}>
                 <div className="flightInfo">
                     <div className="departure block">
                         <img src="/images/take_off.png" alt="TakeOff picture"/>
@@ -48,7 +54,7 @@ export default class Flight extends React.Component {
                         {ticketsAvailText}
                     </div>
                     <div className="ticketsPrice">
-                        <p>Цена билета</p>
+                        <p>{price}</p>
                         <p>{this.props.ticketPrice}</p></div>
                 </div>
             </div>

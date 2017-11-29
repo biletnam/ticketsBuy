@@ -19,9 +19,10 @@ export default class FindFlights extends React.Component {
             if (this.arrivalAirportFilter.indexOf(flight.airportArrival) === -1){ this.arrivalAirportFilter.push(flight.airportArrival); }
         });
     }
-    onChooseFlight(flightId){
+
+    onChooseFlight(flight){
         let self = this;
-        axios.post("/checkFlightById", {"flightId": flightId})
+        axios.post("/checkFlightById", flight)
             .then(response => {
                 if (response.data.canBeBooked){
                     response.data.personAmount = self.props.location.state.personAmount;
@@ -65,7 +66,7 @@ export default class FindFlights extends React.Component {
                             return (
                                 <Flight
                                     key={flight.key}
-                                    onChoose={this.onChooseFlight.bind(this, flight.flightId)}
+                                    onChoose={this.onChooseFlight.bind(this, flight)}
                                     airportArrival={flight.airportArrival}
                                     airportDeparture={flight.airportDeparture}
                                     timeDeparture={flight.timeDeparture}
