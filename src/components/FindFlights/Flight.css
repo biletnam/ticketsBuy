@@ -1,0 +1,86 @@
+.AllFlights {
+    float:left
+}
+.FlightComponent{
+    width:70vw;
+    margin-left:5vw;
+    margin-top:10vh;
+    background: #f8f8f8;
+    display:flex;
+    flex-direction: column;
+}
+
+.flightInfo{
+    display:flex;
+    flex-direction: row;
+    justify-content:space-around;
+    margin:0 auto;
+    width:100%;
+}
+
+.departure_block, .arrival_block{
+    display:flex;
+    flex-direction:row;
+    align-items:baseline;
+}
+.arrival , .departure{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+}
+.departureData, .arrivalData{
+    align-self:center;
+}
+.departureData>p:first-child, .arrivalData>p:first-child{
+    font-size:2vh;
+    text-transform:uppercase;
+}
+.departureData>p:last-child, .arrivalData>p:last-child{
+    font-size:3vh;
+    text-transform:uppercase;
+}
+.line-separator{
+    margin:0;
+    height:12vh;
+    width:1px;
+    background:#ff5332;
+    align-self:center;
+}
+.line-separator-bold{
+    margin:0;
+    height:2px;
+    width:8vw;
+    background:#ff5332;
+}
+.timeElapsed{
+    text-align:center;
+}
+.middle{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.airports{
+    display:flex;
+    align-self:flex-start;
+    justify-content:flex-start;
+}
+.airports>p:first-child{
+    margin-right:3vw;
+}
+.airports>p:last-child{
+    margin-left:3vw;
+    margin-bottom:2vh;
+}
+.hot{
+    color:#ff5332;
+    font-weight:600;
+}
+.ticketsAvailable, .ticketsPrice{
+    text-transform:uppercase;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}

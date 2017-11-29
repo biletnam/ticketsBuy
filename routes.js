@@ -30,7 +30,7 @@ module.exports = function (app) {
                 timeArrival: "12:50",
                 cityDeparture: "Киев",
                 cityArrival: "Львов",
-                ticketsAvailable: 50,
+                ticketsAvailable: 9,
                 ticketPrice: 2500,
                 airlinesLogoLink : "/images/airlines/alitalia.png"
             }

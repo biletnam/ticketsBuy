@@ -59,24 +59,26 @@ export default class FindFlights extends React.Component {
         } else {
             return (
                 <div className="findFlightsComponents">
-                    <FilterBox className="col-60" handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
-                    { this.state.displayedFlights.map((flight) =>{
-                        return (
-                            <Flight
-                                key={flight.key}
-                                onChoose={this.onChooseFlight.bind(this, flight.flightId)}
-                                airportArrival={flight.airportArrival}
-                                airportDeparture={flight.airportDeparture}
-                                timeDeparture={flight.timeDeparture}
-                                timeArrival={flight.timeArrival}
-                                cityDeparture={flight.cityDeparture}
-                                cityArrival={flight.cityArrival}
-                                ticketsAvailable={flight.ticketsAvailable}
-                                airlinesLogo = {flight.airlinesLogoLink}
-                                ticketPrice={flight.ticketPrice} {...self.props} />
-                        );
-                    })
-                    }
+                    <FilterBox className="col-40" handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
+                    <div className="AllFlights col-60">
+                        { this.state.displayedFlights.map((flight) =>{
+                            return (
+                                <Flight
+                                    key={flight.key}
+                                    onChoose={this.onChooseFlight.bind(this, flight.flightId)}
+                                    airportArrival={flight.airportArrival}
+                                    airportDeparture={flight.airportDeparture}
+                                    timeDeparture={flight.timeDeparture}
+                                    timeArrival={flight.timeArrival}
+                                    cityDeparture={flight.cityDeparture}
+                                    cityArrival={flight.cityArrival}
+                                    ticketsAvailable={flight.ticketsAvailable}
+                                    airlinesLogo = {flight.airlinesLogoLink}
+                                    ticketPrice={flight.ticketPrice} {...self.props} />
+                            );
+                        })
+                        }
+                    </div>
                 </div>
             );
         }
