@@ -11,9 +11,10 @@ export default class Failed extends React.Component {
     render() {
         return (
             <div className="failedPageComponent">
-                <img src="/images/failed.png" alt="FailedPng"/>
-                <h1>Что-то пошло не так</h1>
-                <input type="button" value="Вернуться назад" onClick={this._nextButtonClicked.bind(this)}/>
+                <h2>Что-то пошло не так</h2>
+                <div className="returnButtonDiv">
+                    <input className="returnButton" type="button" value="Вернуться назад" onClick={this._nextButtonClicked.bind(this)}/>
+                </div>
             </div>
         );
     }

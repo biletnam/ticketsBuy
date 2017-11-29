@@ -134,25 +134,31 @@ export default class AdditionalInfo extends React.Component {
             );
         }
         if (this.state.submitted) {
-            return( <div className="additionalInfoComponent">
-                <Flight
-                    key={this.props.location.state.key}
-                    airportArrival={this.props.location.state.airportArrival}
-                    airportDeparture={this.props.location.state.airportDeparture}
-                    timeDeparture={this.props.location.state.timeDeparture}
-                    timeArrival={this.props.location.state.timeArrival}
-                    cityDeparture={this.props.location.state.cityDeparture}
-                    cityArrival={this.props.location.state.cityArrival}
-                    ticketsAvailable={this.props.location.state.ticketsAvailable - this.props.location.state.personAmount}
-                    airlinesLogo = {this.props.location.state.airlinesLogoLink}
-                    ticketPrice={this.props.location.state.ticketPrice} {...self.props} />
-                <div className="passengersList">
-                    {passengersInput}
+            return(
+                <div className="additionalInfoComponent">
+                    <Flight
+                        additionalPage="true"
+                        key={this.props.location.state.key}
+                        airportArrival={this.props.location.state.airportArrival}
+                        airportDeparture={this.props.location.state.airportDeparture}
+                        timeDeparture={this.props.location.state.timeDeparture}
+                        timeArrival={this.props.location.state.timeArrival}
+                        cityDeparture={this.props.location.state.cityDeparture}
+                        cityArrival={this.props.location.state.cityArrival}
+                        ticketsAvailable={this.ticketsLeft}
+                        airlinesLogo = {this.props.location.state.airlinesLogoLink}
+                        ticketPrice={this.ticketsToBook * this.props.location.state.ticketPrice} {...self.props} />
+                    <div className="passengersList">
+                        {passengersInput}
+                    </div>
+                    <div className="agreement">
+                        <label><input type="checkbox" checked={this.state.agreement} onChange={this._checkBoxChange.bind(this)} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
+                        <div style={{clear:"both"}}>
+                            <LoadingSpinner/>
+                        </div>
+                    </div>
                 </div>
-                <label><input type="checkbox" checked={this.state.agreement} onChange={this._checkBoxChange.bind(this)} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
-                <input type="button" value="Дальше" onClick={this._nextButtonClicked.bind(this)}/>
-                <LoadingSpinner/>
-            </div> );
+            );
         } else {
             return (
                 <div className="additionalInfoComponent">
@@ -171,8 +177,12 @@ export default class AdditionalInfo extends React.Component {
                     <div className="passengersList">
                         {passengersInput}
                     </div>
-                    <label><input type="checkbox" checked={this.state.agreement} onChange={this._checkBoxChange.bind(this)} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
-                    <input type="button" value="Дальше" onClick={this._nextButtonClicked.bind(this)}/>
+                    <div className="agreement">
+                        <label><input type="checkbox" checked={this.state.agreement} onChange={this._checkBoxChange.bind(this)} />Я согласен с условиями перельота и студента, сделавшего этот сайт</label>
+                        <div style={{clear:"both"}}>
+                            <input type="button" value="Дальше" onClick={this._nextButtonClicked.bind(this)}/>
+                        </div>
+                    </div>
                 </div>
             );
         }

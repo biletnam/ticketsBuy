@@ -52,7 +52,7 @@ module.exports = function (app) {
         generatePDF(bookingId,tickets,req)
             .then( ()=> {
                 res.json({
-                    "bookedSuccessfully" : true,
+                    "bookedSuccessfully" : <true></true>,
                     "bookingId" : bookingId
                 });
             })

@@ -1,0 +1,23 @@
+.SuccessPageComponent, .failedPageComponent{
+    width:70vw;
+    background: #f8f8f8;
+}
+.SuccessPageComponent h2, .failedPageComponent h2{
+    width:100%;
+    font-size:25px;
+    font-weight:300;
+    text-align: center;
+    margin:3vh 0;
+    padding:3vh 0;
+}
+.returnButtonDiv{
+    text-align: center;
+    padding-bottom:5vh;
+}
+.returnButton{
+    background-color: #ff5332;
+    color: white;
+    padding:1vh;
+    text-transform:uppercase;
+    border: 2px solid #ccc;
+}

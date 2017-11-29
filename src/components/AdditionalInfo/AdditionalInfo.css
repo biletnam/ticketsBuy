@@ -47,3 +47,21 @@
     font-weight: 600;
     font-size:18px;
 }
+.agreement {
+    padding-top:2vh;
+    margin:0 auto;
+    width:70vw;
+    background: #f8f8f8;
+    text-align:center;
+}
+.agreement input{
+    margin-right:1vw;
+}
+.agreement input[type=button]{
+    margin:3vh auto;
+    background-color: #ff5332;
+    color: white;
+    padding:1vh;
+    text-transform:uppercase;
+    border: 2px solid #ccc;
+}

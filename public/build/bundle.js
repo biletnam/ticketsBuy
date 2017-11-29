@@ -2409,7 +2409,7 @@ var IE8_DOM_DEFINE = __webpack_require__(101);
 var toPrimitive = __webpack_require__(61);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(14) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(16) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -2424,26 +2424,6 @@ exports.f = __webpack_require__(14) ? Object.defineProperty : function definePro
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(20)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 16 */
 /***/ (function(module, exports) {
 
 /*
@@ -2525,7 +2505,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -2897,12 +2877,32 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(20)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(13);
 var createDesc = __webpack_require__(29);
-module.exports = __webpack_require__(14) ? function (object, key, value) {
+module.exports = __webpack_require__(16) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -4936,7 +4936,7 @@ module.exports = (
 /***/ (function(module, exports, __webpack_require__) {
 
 var def = __webpack_require__(13).f;
-var has = __webpack_require__(15);
+var has = __webpack_require__(17);
 var TAG = __webpack_require__(9)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -6774,7 +6774,7 @@ var LIBRARY = __webpack_require__(59);
 var $export = __webpack_require__(11);
 var redefine = __webpack_require__(103);
 var hide = __webpack_require__(18);
-var has = __webpack_require__(15);
+var has = __webpack_require__(17);
 var Iterators = __webpack_require__(30);
 var $iterCreate = __webpack_require__(224);
 var setToStringTag = __webpack_require__(67);
@@ -6845,7 +6845,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(14) && !__webpack_require__(20)(function () {
+module.exports = !__webpack_require__(16) && !__webpack_require__(20)(function () {
   return Object.defineProperty(__webpack_require__(102)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -6874,7 +6874,7 @@ module.exports = __webpack_require__(18);
 /* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(15);
+var has = __webpack_require__(17);
 var toIObject = __webpack_require__(21);
 var arrayIndexOf = __webpack_require__(226)(false);
 var IE_PROTO = __webpack_require__(64)('IE_PROTO');
@@ -6922,7 +6922,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(15);
+var has = __webpack_require__(17);
 var toObject = __webpack_require__(32);
 var IE_PROTO = __webpack_require__(64)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -7346,11 +7346,11 @@ var pIE = __webpack_require__(43);
 var createDesc = __webpack_require__(29);
 var toIObject = __webpack_require__(21);
 var toPrimitive = __webpack_require__(61);
-var has = __webpack_require__(15);
+var has = __webpack_require__(17);
 var IE8_DOM_DEFINE = __webpack_require__(101);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(14) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(16) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -28505,7 +28505,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(15)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -28525,7 +28525,7 @@ if(false) {
 /* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(undefined);
+exports = module.exports = __webpack_require__(14)(undefined);
 // imports
 
 
@@ -33330,7 +33330,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(15)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -33350,7 +33350,7 @@ if(false) {
 /* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(undefined);
+exports = module.exports = __webpack_require__(14)(undefined);
 // imports
 
 
@@ -33375,7 +33375,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(15)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -33395,7 +33395,7 @@ if(false) {
 /* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(undefined);
+exports = module.exports = __webpack_require__(14)(undefined);
 // imports
 
 
@@ -33923,7 +33923,7 @@ var dP = __webpack_require__(13);
 var anObject = __webpack_require__(19);
 var getKeys = __webpack_require__(31);
 
-module.exports = __webpack_require__(14) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(16) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -38723,7 +38723,7 @@ module.exports = function defineProperty(it, key, desc) {
 
 var $export = __webpack_require__(11);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(14), 'Object', { defineProperty: __webpack_require__(13).f });
+$export($export.S + $export.F * !__webpack_require__(16), 'Object', { defineProperty: __webpack_require__(13).f });
 
 
 /***/ }),
@@ -38848,8 +38848,8 @@ module.exports = __webpack_require__(7).Symbol;
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(12);
-var has = __webpack_require__(15);
-var DESCRIPTORS = __webpack_require__(14);
+var has = __webpack_require__(17);
+var DESCRIPTORS = __webpack_require__(16);
 var $export = __webpack_require__(11);
 var redefine = __webpack_require__(103);
 var META = __webpack_require__(286).KEY;
@@ -39087,7 +39087,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(41)('meta');
 var isObject = __webpack_require__(28);
-var has = __webpack_require__(15);
+var has = __webpack_require__(17);
 var setDesc = __webpack_require__(13).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
@@ -41401,7 +41401,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(15)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -41421,7 +41421,7 @@ if(false) {
 /* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(undefined);
+exports = module.exports = __webpack_require__(14)(undefined);
 // imports
 
 
@@ -41446,7 +41446,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(15)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -41466,7 +41466,7 @@ if(false) {
 /* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(undefined);
+exports = module.exports = __webpack_require__(14)(undefined);
 // imports
 
 
@@ -41724,6 +41724,7 @@ var AdditionalInfo = function (_React$Component) {
                     "div",
                     { className: "additionalInfoComponent" },
                     _react2.default.createElement(_Flight2.default, _extends({
+                        additionalPage: "true",
                         key: this.props.location.state.key,
                         airportArrival: this.props.location.state.airportArrival,
                         airportDeparture: this.props.location.state.airportDeparture,
@@ -41731,22 +41732,29 @@ var AdditionalInfo = function (_React$Component) {
                         timeArrival: this.props.location.state.timeArrival,
                         cityDeparture: this.props.location.state.cityDeparture,
                         cityArrival: this.props.location.state.cityArrival,
-                        ticketsAvailable: this.props.location.state.ticketsAvailable - this.props.location.state.personAmount,
+                        ticketsAvailable: this.ticketsLeft,
                         airlinesLogo: this.props.location.state.airlinesLogoLink,
-                        ticketPrice: this.props.location.state.ticketPrice }, self.props)),
+                        ticketPrice: this.ticketsToBook * this.props.location.state.ticketPrice }, self.props)),
                     _react2.default.createElement(
                         "div",
                         { className: "passengersList" },
                         passengersInput
                     ),
                     _react2.default.createElement(
-                        "label",
-                        null,
-                        _react2.default.createElement("input", { type: "checkbox", checked: this.state.agreement, onChange: this._checkBoxChange.bind(this) }),
-                        "\u042F \u0441\u043E\u0433\u043B\u0430\u0441\u0435\u043D \u0441 \u0443\u0441\u043B\u043E\u0432\u0438\u044F\u043C\u0438 \u043F\u0435\u0440\u0435\u043B\u044C\u043E\u0442\u0430 \u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430, \u0441\u0434\u0435\u043B\u0430\u0432\u0448\u0435\u0433\u043E \u044D\u0442\u043E\u0442 \u0441\u0430\u0439\u0442"
-                    ),
-                    _react2.default.createElement("input", { type: "button", value: "\u0414\u0430\u043B\u044C\u0448\u0435", onClick: this._nextButtonClicked.bind(this) }),
-                    _react2.default.createElement(_LoadingSpinner2.default, null)
+                        "div",
+                        { className: "agreement" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            _react2.default.createElement("input", { type: "checkbox", checked: this.state.agreement, onChange: this._checkBoxChange.bind(this) }),
+                            "\u042F \u0441\u043E\u0433\u043B\u0430\u0441\u0435\u043D \u0441 \u0443\u0441\u043B\u043E\u0432\u0438\u044F\u043C\u0438 \u043F\u0435\u0440\u0435\u043B\u044C\u043E\u0442\u0430 \u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430, \u0441\u0434\u0435\u043B\u0430\u0432\u0448\u0435\u0433\u043E \u044D\u0442\u043E\u0442 \u0441\u0430\u0439\u0442"
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { style: { clear: "both" } },
+                            _react2.default.createElement(_LoadingSpinner2.default, null)
+                        )
+                    )
                 );
             } else {
                 return _react2.default.createElement(
@@ -41770,12 +41778,20 @@ var AdditionalInfo = function (_React$Component) {
                         passengersInput
                     ),
                     _react2.default.createElement(
-                        "label",
-                        null,
-                        _react2.default.createElement("input", { type: "checkbox", checked: this.state.agreement, onChange: this._checkBoxChange.bind(this) }),
-                        "\u042F \u0441\u043E\u0433\u043B\u0430\u0441\u0435\u043D \u0441 \u0443\u0441\u043B\u043E\u0432\u0438\u044F\u043C\u0438 \u043F\u0435\u0440\u0435\u043B\u044C\u043E\u0442\u0430 \u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430, \u0441\u0434\u0435\u043B\u0430\u0432\u0448\u0435\u0433\u043E \u044D\u0442\u043E\u0442 \u0441\u0430\u0439\u0442"
-                    ),
-                    _react2.default.createElement("input", { type: "button", value: "\u0414\u0430\u043B\u044C\u0448\u0435", onClick: this._nextButtonClicked.bind(this) })
+                        "div",
+                        { className: "agreement" },
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            _react2.default.createElement("input", { type: "checkbox", checked: this.state.agreement, onChange: this._checkBoxChange.bind(this) }),
+                            "\u042F \u0441\u043E\u0433\u043B\u0430\u0441\u0435\u043D \u0441 \u0443\u0441\u043B\u043E\u0432\u0438\u044F\u043C\u0438 \u043F\u0435\u0440\u0435\u043B\u044C\u043E\u0442\u0430 \u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430, \u0441\u0434\u0435\u043B\u0430\u0432\u0448\u0435\u0433\u043E \u044D\u0442\u043E\u0442 \u0441\u0430\u0439\u0442"
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { style: { clear: "both" } },
+                            _react2.default.createElement("input", { type: "button", value: "\u0414\u0430\u043B\u044C\u0448\u0435", onClick: this._nextButtonClicked.bind(this) })
+                        )
+                    )
                 );
             }
         }
@@ -41801,7 +41817,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(17)(content, options);
+var update = __webpack_require__(15)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -41821,12 +41837,12 @@ if(false) {
 /* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)(undefined);
+exports = module.exports = __webpack_require__(14)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, ".uniquePassenger{\r\n    width:70vw;\r\n    display:flex;\r\n    flex-direction:column;\r\n    justify-content:center;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n}\r\n.line-separator-bold-additional{\r\n    margin:0 auto;\r\n    height:2px;\r\n    width:60vw;\r\n    background:#ff5332;\r\n}\r\n.info {\r\n    display:flex;\r\n    flex-direction:row;\r\n}\r\n.firstColumn, .secondColumn, .info .block{\r\n    display:flex;\r\n    flex-direction: column;\r\n    align-items:flex-start;\r\n    margin:2.5vh 4vw;\r\n}\r\n.info .block{\r\n    display:flex;\r\n    flex-direction:column;\r\n    align-items:flex-start;\r\n    justify-content:space-around;\r\n}\r\n.info .block>label{\r\n    padding-left:0.5vw;\r\n    padding-bottom:0.5vh;\r\n    width:100%;\r\n}\r\n.info .block>input{\r\n    background-color:#eee;\r\n    height:5vh;\r\n    border:1px solid #eee;\r\n}\r\n.info .block>input:focus{\r\n    border:1px solid #fc8d78;\r\n}\r\n.headerPassenger{\r\n    width:100%;\r\n    padding:3vh 0 1vh 5vw;\r\n    font-weight: 600;\r\n    font-size:18px;\r\n}\r\n", ""]);
+exports.push([module.i, ".uniquePassenger{\r\n    width:70vw;\r\n    display:flex;\r\n    flex-direction:column;\r\n    justify-content:center;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n}\r\n.line-separator-bold-additional{\r\n    margin:0 auto;\r\n    height:2px;\r\n    width:60vw;\r\n    background:#ff5332;\r\n}\r\n.info {\r\n    display:flex;\r\n    flex-direction:row;\r\n}\r\n.firstColumn, .secondColumn, .info .block{\r\n    display:flex;\r\n    flex-direction: column;\r\n    align-items:flex-start;\r\n    margin:2.5vh 4vw;\r\n}\r\n.info .block{\r\n    display:flex;\r\n    flex-direction:column;\r\n    align-items:flex-start;\r\n    justify-content:space-around;\r\n}\r\n.info .block>label{\r\n    padding-left:0.5vw;\r\n    padding-bottom:0.5vh;\r\n    width:100%;\r\n}\r\n.info .block>input{\r\n    background-color:#eee;\r\n    height:5vh;\r\n    border:1px solid #eee;\r\n}\r\n.info .block>input:focus{\r\n    border:1px solid #fc8d78;\r\n}\r\n.headerPassenger{\r\n    width:100%;\r\n    padding:3vh 0 1vh 5vw;\r\n    font-weight: 600;\r\n    font-size:18px;\r\n}\r\n.agreement {\r\n    padding-top:2vh;\r\n    margin:0 auto;\r\n    width:70vw;\r\n    background: #f8f8f8;\r\n    text-align:center;\r\n}\r\n.agreement input{\r\n    margin-right:1vw;\r\n}\r\n.agreement input[type=button]{\r\n    margin:3vh auto;\r\n    background-color: #ff5332;\r\n    color: white;\r\n    padding:1vh;\r\n    text-transform:uppercase;\r\n    border: 2px solid #ccc;\r\n}\r\n", ""]);
 
 // exports
 
@@ -41876,13 +41892,16 @@ var Failed = function (_React$Component) {
             return _react2.default.createElement(
                 "div",
                 { className: "failedPageComponent" },
-                _react2.default.createElement("img", { src: "/images/failed.png", alt: "FailedPng" }),
                 _react2.default.createElement(
-                    "h1",
+                    "h2",
                     null,
                     "\u0427\u0442\u043E-\u0442\u043E \u043F\u043E\u0448\u043B\u043E \u043D\u0435 \u0442\u0430\u043A"
                 ),
-                _react2.default.createElement("input", { type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430\u0437\u0430\u0434", onClick: this._nextButtonClicked.bind(this) })
+                _react2.default.createElement(
+                    "div",
+                    { className: "returnButtonDiv" },
+                    _react2.default.createElement("input", { className: "returnButton", type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430\u0437\u0430\u0434", onClick: this._nextButtonClicked.bind(this) })
+                )
             );
         }
     }]);
@@ -41909,6 +41928,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+__webpack_require__(324);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41926,7 +41947,6 @@ var Success = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Success.__proto__ || Object.getPrototypeOf(Success)).call(this, props));
 
         _this.successData = _this.props.location.state;
-        console.log(_this.successData);
         return _this;
     }
 
@@ -41938,11 +41958,10 @@ var Success = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var pdfPath = "/pdf/" + this.successData.bookingId + ".pdf#zoom=85&scrollbar=0&toolbar=0&navpanes=0";
+            var pdfPath = "/pdf/" + this.successData.bookingId + ".pdf#zoom=100&scrollbar=0&toolbar=0&navpanes=0";
             return _react2.default.createElement(
                 "div",
                 { className: "SuccessPageComponent" },
-                _react2.default.createElement("img", { src: "/images/success.png", alt: "SuccessPng" }),
                 _react2.default.createElement(
                     "h2",
                     null,
@@ -41957,7 +41976,11 @@ var Success = function (_React$Component) {
                         "PDF cannot be displayed."
                     )
                 ),
-                _react2.default.createElement("input", { type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430 \u0433\u043B\u0430\u0432\u043D\u0443\u044E", onClick: this._nextButtonClicked.bind(this) })
+                _react2.default.createElement(
+                    "div",
+                    { className: "returnButtonDiv" },
+                    _react2.default.createElement("input", { className: "returnButton", type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430 \u0433\u043B\u0430\u0432\u043D\u0443\u044E", onClick: this._nextButtonClicked.bind(this) })
+                )
             );
         }
     }]);
@@ -41966,6 +41989,51 @@ var Success = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Success;
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(325);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(15)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./Success.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./Success.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 325 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(14)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".SuccessPageComponent, .failedPageComponent{\r\n    width:70vw;\r\n    background: #f8f8f8;\r\n}\r\n.SuccessPageComponent h2, .failedPageComponent h2{\r\n    width:100%;\r\n    font-size:25px;\r\n    font-weight:300;\r\n    text-align: center;\r\n    margin:3vh 0;\r\n    padding:3vh 0;\r\n}\r\n.returnButtonDiv{\r\n    text-align: center;\r\n    padding-bottom:5vh;\r\n}\r\n.returnButton{\r\n    background-color: #ff5332;\r\n    color: white;\r\n    padding:1vh;\r\n    text-transform:uppercase;\r\n    border: 2px solid #ccc;\r\n}", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
