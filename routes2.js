@@ -1,6 +1,5 @@
 "use strict";
 let generatePDF = require("./generatePDF");
-let DB = require("./dbInit");
 module.exports = function (app) {
 
     app.get("/", function(req, res){
@@ -8,11 +7,8 @@ module.exports = function (app) {
     });
 
     app.post("/findAvailableFlights", (req, res)=>{
-        let userReq = new DB();
-        let toSend = userReq.findAvailableFlights(req.body);
-        res.json(toSend);
-        /*
-        [
+        console.log(req.body);
+        res.json([
             {
                 key: "12412",
                 flightId: "12412",
@@ -52,43 +48,32 @@ module.exports = function (app) {
                 ticketPrice: 12500,
                 airlinesLogoLink : "/images/airlines/emirates.png"
             }
-        ]
-         */
-
+        ]);
     });
     app.post("/checkFlightById", (req, res)=>{
         let flight = req.body;
-        let userReq = new DB();
-        flight.canBeBooked = userReq.booleanCheckFlightById(flight.flightId);
+        flight.canBeBooked=true;
         res.json(flight);
     });
 
     app.post("/sendPassengerData", (req,res)=> {
+        // TODO update query to database
         let bookingId = generateRandomNumber(100000,0);
         let tickets = [];
         for (let i = 0; i < req.body.flight.personAmount ; i++){
             tickets[i] = generateRandomNumber(10000000000, 0);
-            req.body.passengers[i].ticketId = tickets[i];
         }
-        let userReq = new DB();
-        userReq.sendPassengerData(req.body,(bookedSuccessfully)=>{
-            if (bookedSuccessfully){
-                generatePDF(bookingId,tickets,req)
-                    .then( ()=> {
-                        res.json({
-                            bookedSuccessfully,
-                            "bookingId" : bookingId
-                        });
-                    })
-                    .catch( (err)=> {
-                        if (err) alert(err);
-                    });
-            } else {
+        generatePDF(bookingId,tickets,req)
+            .then( ()=> {
                 res.json({
-                    bookedSuccessfully
+                    "bookedSuccessfully" : true,
+                    "bookingId" : bookingId
                 });
-            }
-        });
+            })
+            .catch( (err)=> {
+                if (err) alert(err);
+            });
+
     });
 
 

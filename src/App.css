@@ -58,10 +58,6 @@ header>ul{
 .main-nav li:first-child{
     margin: 0 1.7em 0 3em;
 }
-.main-nav li:last-child{
-    margin-left: auto;
-    margin-right: 6em;
-}
 .main-nav a {
     display: inline-block;
     text-decoration: none;

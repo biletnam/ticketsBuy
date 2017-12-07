@@ -10,7 +10,6 @@ export default class Menu extends React.Component {
                     <li><Link to="/">БИЛЕТЫ</Link></li>
                     <li><a href="#">ТАБЛО</a></li>
                     <li><a href="#">ГОСТИННИЦЫ</a></li>
-                    <li className="rightEnter"><Link to="/signIn">ВОЙТИ</Link></li>
                 </ul>
             </header>
         );
