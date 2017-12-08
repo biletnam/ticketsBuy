@@ -100,3 +100,13 @@
     justify-content:center;
     text-align:center;
 }
+.noTickets{
+    width:70vw;
+    padding:0 2em;
+    margin-left:5vw;
+    margin-top:10vh;
+    background: #f8f8f8;
+    font-size:2vw;
+    text-align: center;
+    color:#000;
+}

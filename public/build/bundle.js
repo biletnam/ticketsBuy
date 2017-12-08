@@ -33466,6 +33466,11 @@ var FindFlights = function (_React$Component) {
     }
 
     _createClass(FindFlights, [{
+        key: "_nextButtonClicked",
+        value: function _nextButtonClicked() {
+            this.props.history.push("/");
+        }
+    }, {
         key: "onChooseFlight",
         value: function onChooseFlight(flight) {
             var self = this;
@@ -33495,19 +33500,41 @@ var FindFlights = function (_React$Component) {
                 depTMin = userWish.depTMin,
                 durT = userWish.durT;
 
-
-            var displayedFlights = this.state.flights.filter(function (flight) {
-                return arr.indexOf(flight.airportArrival) !== -1 && dep.indexOf(flight.airportDeparture) !== -1 && new Date(2000, 1, 25, arrTMin, 0) <= new Date(2000, 1, 25, flight.timeArrival.split(":")[0], flight.timeArrival.split(":")[1]) && new Date(2000, 1, 25, depTMin, 0) <= new Date(2000, 1, 25, flight.timeDeparture.split(":")[0], flight.timeDeparture.split(":")[1]) && new Date(1970, 0, 1, durT, 0) >= new Date(new Date(2000, 1, 25, +flight.timeArrival.split(":")[0] - 2, flight.timeArrival.split(":")[1]) - new Date(2000, 1, 25, flight.timeDeparture.split(":")[0], flight.timeDeparture.split(":")[1]));
-            });
-            this.setState({ "displayedFlights": displayedFlights });
+            if (this.state.flights.length > 0) {
+                var displayedFlights = this.state.flights.filter(function (flight) {
+                    return arr.indexOf(flight.airportArrival) !== -1 && dep.indexOf(flight.airportDeparture) !== -1 && new Date(2000, 1, 25, arrTMin, 0) <= new Date(2000, 1, 25, flight.timeArrival.split(":")[0], flight.timeArrival.split(":")[1]) && new Date(2000, 1, 25, depTMin, 0) <= new Date(2000, 1, 25, flight.timeDeparture.split(":")[0], flight.timeDeparture.split(":")[1]) && new Date(1970, 0, 1, durT, 0) >= new Date(new Date(2000, 1, 25, +flight.timeArrival.split(":")[0] - 2, flight.timeArrival.split(":")[1]) - new Date(2000, 1, 25, flight.timeDeparture.split(":")[0], flight.timeDeparture.split(":")[1]));
+                });
+                this.setState({ "displayedFlights": displayedFlights });
+            }
         }
     }, {
         key: "render",
         value: function render() {
             var _this2 = this;
 
+            console.log(this.state.displayedFlights);
             if (this.state.submitted) {
                 return _react2.default.createElement(_LoadingSpinner2.default, null);
+            } else if (this.state.displayedFlights.length === 0) {
+                return _react2.default.createElement(
+                    "div",
+                    { className: "findFlightsComponents" },
+                    _react2.default.createElement(_FilterBox2.default, { className: "col-40", handleFilter: this.handleFilter.bind(this), departureAirportList: this.departureAirportFilter, arrivalAirportList: this.arrivalAirportFilter }),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "AllFlights col-60" },
+                        _react2.default.createElement(
+                            "h1",
+                            { className: "noTickets" },
+                            " \u041A \u0441\u043E\u0436\u0430\u043B\u0435\u043D\u0438\u044E, \u043F\u043E \u0432\u0430\u0448\u0435\u043C\u0443 \u0437\u0430\u043F\u0440\u043E\u0441\u0443 \u0431\u0438\u043B\u0435\u0442\u043E\u0432 \u043D\u0435\u0442!",
+                            _react2.default.createElement(
+                                "div",
+                                { className: "returnButtonDiv" },
+                                _react2.default.createElement("input", { className: "returnButton", type: "button", value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430 \u0433\u043B\u0430\u0432\u043D\u0443\u044E", onClick: this._nextButtonClicked.bind(this) })
+                            )
+                        )
+                    )
+                );
             } else {
                 return _react2.default.createElement(
                     "div",
@@ -41462,7 +41489,7 @@ exports = module.exports = __webpack_require__(14)(undefined);
 
 
 // module
-exports.push([module.i, ".AllFlights {\r\n    float:left;\r\n\r\n}\r\n.FlightComponent{\r\n    width:70vw;\r\n    margin-left:5vw;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n    display:flex;\r\n    flex-direction: column;\r\n    border:1px solid #f8f8f8;\r\n}\r\n.FlightComponent:hover{\r\n    border:1px solid #ff5332;\r\n}\r\n.FlightComponentAdditional{\r\n    width:70vw;\r\n    display:flex;\r\n    justify-content:center;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n}\r\n\r\n.flightInfo{\r\n    display:flex;\r\n    flex-direction: row;\r\n    justify-content:space-around;\r\n    margin:0 auto;\r\n    width:100%;\r\n}\r\n\r\n.departure_block, .arrival_block{\r\n    display:flex;\r\n    flex-direction:row;\r\n    align-items:baseline;\r\n}\r\n.arrival , .departure{\r\n    display:flex;\r\n    flex-direction:row;\r\n    align-items:center;\r\n}\r\n.departureData, .arrivalData{\r\n    align-self:center;\r\n}\r\n.departureData>p:first-child, .arrivalData>p:first-child{\r\n    font-size:2vh;\r\n    text-transform:uppercase;\r\n}\r\n.departureData>p:last-child, .arrivalData>p:last-child{\r\n    font-size:3vh;\r\n    text-transform:uppercase;\r\n}\r\n.line-separator{\r\n    margin:0;\r\n    height:12vh;\r\n    width:1px;\r\n    background:#ff5332;\r\n    align-self:center;\r\n}\r\n.line-separator-bold{\r\n    margin:0;\r\n    height:2px;\r\n    width:8vw;\r\n    background:#ff5332;\r\n}\r\n.timeElapsed{\r\n    text-align:center;\r\n}\r\n.middle{\r\n    display:flex;\r\n    flex-direction:column;\r\n    align-items:center;\r\n}\r\n.middle img{\r\n    width:auto;\r\n    height:50px;\r\n}\r\n.airports{\r\n    display:flex;\r\n    align-self:flex-start;\r\n    justify-content:flex-start;\r\n}\r\n.airports>p:first-child{\r\n    margin-right:3vw;\r\n}\r\n.airports>p:last-child{\r\n    margin-left:3vw;\r\n    margin-bottom:2vh;\r\n}\r\n.hot{\r\n    color:#ff5332;\r\n    font-weight:600;\r\n}\r\n.ticketsAvailable, .ticketsPrice{\r\n    text-transform:uppercase;\r\n    display:flex;\r\n    flex-direction:column;\r\n    align-items:center;\r\n    justify-content:center;\r\n    text-align:center;\r\n}", ""]);
+exports.push([module.i, ".AllFlights {\r\n    float:left;\r\n\r\n}\r\n.FlightComponent{\r\n    width:70vw;\r\n    margin-left:5vw;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n    display:flex;\r\n    flex-direction: column;\r\n    border:1px solid #f8f8f8;\r\n}\r\n.FlightComponent:hover{\r\n    border:1px solid #ff5332;\r\n}\r\n.FlightComponentAdditional{\r\n    width:70vw;\r\n    display:flex;\r\n    justify-content:center;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n}\r\n\r\n.flightInfo{\r\n    display:flex;\r\n    flex-direction: row;\r\n    justify-content:space-around;\r\n    margin:0 auto;\r\n    width:100%;\r\n}\r\n\r\n.departure_block, .arrival_block{\r\n    display:flex;\r\n    flex-direction:row;\r\n    align-items:baseline;\r\n}\r\n.arrival , .departure{\r\n    display:flex;\r\n    flex-direction:row;\r\n    align-items:center;\r\n}\r\n.departureData, .arrivalData{\r\n    align-self:center;\r\n}\r\n.departureData>p:first-child, .arrivalData>p:first-child{\r\n    font-size:2vh;\r\n    text-transform:uppercase;\r\n}\r\n.departureData>p:last-child, .arrivalData>p:last-child{\r\n    font-size:3vh;\r\n    text-transform:uppercase;\r\n}\r\n.line-separator{\r\n    margin:0;\r\n    height:12vh;\r\n    width:1px;\r\n    background:#ff5332;\r\n    align-self:center;\r\n}\r\n.line-separator-bold{\r\n    margin:0;\r\n    height:2px;\r\n    width:8vw;\r\n    background:#ff5332;\r\n}\r\n.timeElapsed{\r\n    text-align:center;\r\n}\r\n.middle{\r\n    display:flex;\r\n    flex-direction:column;\r\n    align-items:center;\r\n}\r\n.middle img{\r\n    width:auto;\r\n    height:50px;\r\n}\r\n.airports{\r\n    display:flex;\r\n    align-self:flex-start;\r\n    justify-content:flex-start;\r\n}\r\n.airports>p:first-child{\r\n    margin-right:3vw;\r\n}\r\n.airports>p:last-child{\r\n    margin-left:3vw;\r\n    margin-bottom:2vh;\r\n}\r\n.hot{\r\n    color:#ff5332;\r\n    font-weight:600;\r\n}\r\n.ticketsAvailable, .ticketsPrice{\r\n    text-transform:uppercase;\r\n    display:flex;\r\n    flex-direction:column;\r\n    align-items:center;\r\n    justify-content:center;\r\n    text-align:center;\r\n}\r\n.noTickets{\r\n    width:70vw;\r\n    padding:0 2em;\r\n    margin-left:5vw;\r\n    margin-top:10vh;\r\n    background: #f8f8f8;\r\n    font-size:2vw;\r\n    text-align: center;\r\n    color:#000;\r\n}", ""]);
 
 // exports
 

@@ -9,8 +9,12 @@ module.exports = function (app) {
 
     app.post("/findAvailableFlights", (req, res)=>{
         let userReq = new DB();
-        let toSend = userReq.findAvailableFlights(req.body);
-        res.json(toSend);
+        userReq.findAvailableFlights(req.body, (data)=>{
+
+            console.log(data);
+            res.json(data);
+        });
+
         /*
         [
             {
@@ -29,8 +33,8 @@ module.exports = function (app) {
             {
                 key: "54234",
                 flightId: "54234",
-                airportArrival : "KBP",
-                airportDeparture: "IEV",
+                airportArrival : "IEV",
+                airportDeparture: "KBP",
                 timeDeparture: "12:00",
                 timeArrival: "12:50",
                 cityDeparture: "Киев",
@@ -42,8 +46,8 @@ module.exports = function (app) {
             {
                 key: "15323",
                 flightId: "15323",
-                airportArrival : "KBP",
-                airportDeparture: "GOI",
+                airportArrival : "GOI",
+                airportDeparture: "KBP",
                 timeDeparture: "09:15",
                 timeArrival: "17:50",
                 cityDeparture: "Киев",

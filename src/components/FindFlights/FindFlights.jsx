@@ -20,6 +20,10 @@ export default class FindFlights extends React.Component {
         });
     }
 
+    _nextButtonClicked() {
+        this.props.history.push("/");
+    }
+
     onChooseFlight(flight){
         let self = this;
         axios.post("/checkFlightById", flight)
@@ -43,21 +47,39 @@ export default class FindFlights extends React.Component {
     }
     handleFilter(userWish){
         let {arr, dep, arrTMin,  depTMin,  durT} = userWish;
-
-        let displayedFlights = this.state.flights.filter(function (flight){
-            return ( (arr.indexOf(flight.airportArrival) !== -1) && (dep.indexOf(flight.airportDeparture) !== -1)
-            &&(new Date(2000,1,25,arrTMin,0) <= new Date(2000,1,25,flight.timeArrival.split(":")[0],flight.timeArrival.split(":")[1]))
-                && (new Date(2000,1,25,depTMin,0) <=  new Date(2000,1,25,flight.timeDeparture.split(":")[0],flight.timeDeparture.split(":")[1]))
-                && ( new Date(1970,0,1,durT,0) >=  new Date(new Date(2000,1,25,(+flight.timeArrival.split(":")[0]-2),flight.timeArrival.split(":")[1]) -
+        if (this.state.flights.length > 0){
+            let displayedFlights = this.state.flights.filter(function (flight){
+                return ( (arr.indexOf(flight.airportArrival) !== -1) && (dep.indexOf(flight.airportDeparture) !== -1)
+                    &&(new Date(2000,1,25,arrTMin,0) <= new Date(2000,1,25,flight.timeArrival.split(":")[0],flight.timeArrival.split(":")[1]))
+                    && (new Date(2000,1,25,depTMin,0) <=  new Date(2000,1,25,flight.timeDeparture.split(":")[0],flight.timeDeparture.split(":")[1]))
+                    && ( new Date(1970,0,1,durT,0) >=  new Date(new Date(2000,1,25,(+flight.timeArrival.split(":")[0]-2),flight.timeArrival.split(":")[1]) -
                         new Date(2000,1,25,flight.timeDeparture.split(":")[0],flight.timeDeparture.split(":")[1])))
-            );
-        });
-        this.setState({"displayedFlights" : displayedFlights});
+                );
+            });
+            this.setState({"displayedFlights" : displayedFlights});
+        }
+
     }
     render() {
+        console.log(this.state.displayedFlights);
         if (this.state.submitted) {
             return <LoadingSpinner/>;
-        } else {
+        }
+        else if (this.state.displayedFlights.length===0) {
+            return (
+                <div className="findFlightsComponents">
+                    <FilterBox className="col-40" handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
+                    <div className="AllFlights col-60">
+                        <h1 className="noTickets"> К сожалению, по вашему запросу билетов нет!
+                            <div className="returnButtonDiv">
+                                <input className="returnButton" type="button" value="Вернуться на главную" onClick={this._nextButtonClicked.bind(this)}/>
+                            </div>
+                        </h1>
+                    </div>
+                </div>
+            );
+        }
+        else {
             return (
                 <div className="findFlightsComponents">
                     <FilterBox className="col-40" handleFilter={this.handleFilter.bind(this)} departureAirportList={this.departureAirportFilter} arrivalAirportList={this.arrivalAirportFilter}/>
