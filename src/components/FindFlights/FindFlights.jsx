@@ -26,6 +26,7 @@ export default class FindFlights extends React.Component {
 
     onChooseFlight(flight){
         let self = this;
+        flight.personAmount = this.props.location.state.personAmount;
         axios.post("/checkFlightById", flight)
             .then(response => {
                 if (response.data.canBeBooked){
@@ -61,7 +62,6 @@ export default class FindFlights extends React.Component {
 
     }
     render() {
-        console.log(this.state.displayedFlights);
         if (this.state.submitted) {
             return <LoadingSpinner/>;
         }

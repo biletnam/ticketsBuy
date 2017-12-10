@@ -3,6 +3,7 @@ import axios from "axios";
 import LoadingSpinner from "../StartPage/LoadingSpinner.jsx";
 import Flight from "../FindFlights/Flight.jsx";
 import "./AdditionalInfo.css";
+
 export default class AdditionalInfo extends React.Component {
     constructor(props) {
         super(props);
@@ -23,8 +24,10 @@ export default class AdditionalInfo extends React.Component {
         }
         this.ticketsToBook = this.props.location.state.ticketsAvailable - this.props.location.state.personAmount < 0 ? this.props.location.state.ticketsAvailable : this.props.location.state.personAmount;
         this.ticketsLeft = this.props.location.state.ticketsAvailable - this.props.location.state.personAmount < 0 ? 0 : this.props.location.state.ticketsAvailable - this.props.location.state.personAmount;
+        this.handleBeforeunload = this.handleBeforeunload.bind(this);
     }
     componentDidMount() {
+        window.addEventListener("beforeunload", this.handleBeforeunload);
         let Passengers = JSON.parse(localStorage.getItem("passengers"));
         if (Passengers){
             let copyState = this.state.passengers;
@@ -38,9 +41,28 @@ export default class AdditionalInfo extends React.Component {
             this.setState({"passengers" : Passengers});
         }
     }
+
     componentDidUpdate() {
         this._updateLocalStorage();
     }
+
+    handleBeforeunload(){
+        let data = {
+            "flightId" : this.props.location.state.key,
+            "personAmount": this.ticketsToBook
+        };
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "/failedToRegister", false);//the false is for making the call synchronous
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify(data));
+    }
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.handleBeforeunload);
+        if (this.state.submitted === false){
+            this.handleBeforeunload.call(this);
+        }
+    }
+
     _updateLocalStorage(){
         let passengers = JSON.stringify(this.state.passengers);
         localStorage.setItem("passengers", passengers);

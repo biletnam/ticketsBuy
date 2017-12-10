@@ -1,0 +1,3 @@
+﻿Остановился на том, что не работает beforeunload метод правильно
+
+пытался установить PROP-types - не работает, crash с ошибкой cairo.h: No such file or director

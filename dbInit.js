@@ -51,37 +51,65 @@ class DB {
                 } catch(e){
                     results = [];
                 }
-                console.log("Result from BD: " + results);
                 this.close();
                 callback(results);
             });
         });
 
     }
-    // TODO rewrite routes due to function bellow return canBeBooked value
     // eslint-disable-next-line no-unused-vars
-    booleanCheckFlightById(id){
-        // TODO write sql to get Subtraction between numberOfSeats and numberOfSold
-        let sql = "";
+    booleanCheckFlightById(id, amount, callback){
+        let sql = `SELECT  airplanes.NumberOfSeats - currentFlight.NumberSoldTickets as ticketsAvailable
+                    FROM mainairport.flighttypes
+                    inner join  mainairport.airplanesflight as currentFlight on 
+                        flighttypes.AirplaneId=currentFlight.AirplaneId
+                    inner join  mainairport.airplanes as airplanes on 
+                        currentFlight.NameAirplane=airplanes.NameAirplane
+                    where flighttypes.FlightTypeId="${id}";`;
         this.con.connect((err) => {
             if (err) throw err;
             this.con.query(sql, (err,result)=>{
-                if (result > 0) {
-                    // TODO write sql to update NumbersOfSold to NumberOfSold-1
-                    let sql2 = "";
-                    this.con.query(sql2, (err,res)=>{
+                if (result[0].ticketsAvailable > 0) {
+                    amount = amount > result[0].ticketsAvailable ? result[0].ticketsAvailable : amount;
+                    let sql2 = `              
+                    UPDATE flighttypes 
+                    inner join  mainairport.airplanesflight as currentFlight on 
+                        flighttypes.AirplaneId=currentFlight.AirplaneId
+                    inner join  mainairport.airplanes as airplanes on 
+                        currentFlight.NameAirplane=airplanes.NameAirplane
+                    SET currentFlight.NumberSoldTickets = currentFlight.NumberSoldTickets + ${amount}
+                    WHERE flighttypes.FlightTypeId = ${id}
+                    and currentFlight.NumberSoldTickets < airplanes.NumberOfSeats`;
+                    this.con.query(sql2, (err)=>{
                         if (err) throw err;
-                        console.log(res);
                         this.close();
-                        return true;
+                        callback(true);
                     });
                 } else {
                     this.close();
-                    return false;
+                    callback(false);
                 }
             });
         });
-
+    }
+    cancelBooking(id, amount, callback){
+        this.con.connect((err) => {
+            if (err) throw err;
+            // TODO return tickets if user exited
+            let sql = `
+            UPDATE flighttypes 
+            inner join  mainairport.airplanesflight as currentFlight on 
+                flighttypes.AirplaneId=currentFlight.AirplaneId
+            inner join  mainairport.airplanes as airplanes on 
+                currentFlight.NameAirplane=airplanes.NameAirplane
+            SET currentFlight.NumberSoldTickets = currentFlight.NumberSoldTickets - ${amount}
+            WHERE flighttypes.FlightTypeId = ${id}
+            `;
+            this.con.query(sql, (err)=>{
+                if (err) throw err;
+                callback();
+            });
+        });
     }
     // eslint-disable-next-line no-unused-vars
     sendPassengerData(pasFlightObj, callback){

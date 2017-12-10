@@ -33474,6 +33474,7 @@ var FindFlights = function (_React$Component) {
         key: "onChooseFlight",
         value: function onChooseFlight(flight) {
             var self = this;
+            flight.personAmount = this.props.location.state.personAmount;
             _axios2.default.post("/checkFlightById", flight).then(function (response) {
                 if (response.data.canBeBooked) {
                     response.data.personAmount = self.props.location.state.personAmount;
@@ -33512,7 +33513,6 @@ var FindFlights = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.state.displayedFlights);
             if (this.state.submitted) {
                 return _react2.default.createElement(_LoadingSpinner2.default, null);
             } else if (this.state.displayedFlights.length === 0) {
@@ -41560,12 +41560,14 @@ var AdditionalInfo = function (_React$Component) {
         }
         _this.ticketsToBook = _this.props.location.state.ticketsAvailable - _this.props.location.state.personAmount < 0 ? _this.props.location.state.ticketsAvailable : _this.props.location.state.personAmount;
         _this.ticketsLeft = _this.props.location.state.ticketsAvailable - _this.props.location.state.personAmount < 0 ? 0 : _this.props.location.state.ticketsAvailable - _this.props.location.state.personAmount;
+        _this.handleBeforeunload = _this.handleBeforeunload.bind(_this);
         return _this;
     }
 
     _createClass(AdditionalInfo, [{
         key: "componentDidMount",
         value: function componentDidMount() {
+            window.addEventListener("beforeunload", this.handleBeforeunload);
             var Passengers = JSON.parse(localStorage.getItem("passengers"));
             if (Passengers) {
                 var copyState = this.state.passengers;
@@ -41583,6 +41585,26 @@ var AdditionalInfo = function (_React$Component) {
         key: "componentDidUpdate",
         value: function componentDidUpdate() {
             this._updateLocalStorage();
+        }
+    }, {
+        key: "handleBeforeunload",
+        value: function handleBeforeunload() {
+            var data = {
+                "flightId": this.props.location.state.key,
+                "personAmount": this.ticketsToBook
+            };
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "/failedToRegister", false); //the false is for making the call synchronous
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send(JSON.stringify(data));
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            window.removeEventListener("beforeunload", this.handleBeforeunload);
+            if (this.state.submitted === false) {
+                this.handleBeforeunload.call(this);
+            }
         }
     }, {
         key: "_updateLocalStorage",

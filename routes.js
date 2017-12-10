@@ -10,8 +10,6 @@ module.exports = function (app) {
     app.post("/findAvailableFlights", (req, res)=>{
         let userReq = new DB();
         userReq.findAvailableFlights(req.body, (data)=>{
-
-            console.log(data);
             res.json(data);
         });
 
@@ -63,8 +61,17 @@ module.exports = function (app) {
     app.post("/checkFlightById", (req, res)=>{
         let flight = req.body;
         let userReq = new DB();
-        flight.canBeBooked = userReq.booleanCheckFlightById(flight.flightId);
-        res.json(flight);
+        userReq.booleanCheckFlightById(flight.flightId, flight.personAmount, (canBeBooked)=>{
+            flight.canBeBooked = canBeBooked;
+            res.json(flight);
+        });
+    });
+    app.post("/failedToRegister", (req, res)=>{
+        let data = req.body;
+        let userReq = new DB();
+        userReq.cancelBooking(data.flightId, data.personAmount, ()=>{
+            res.json();
+        });
     });
 
     app.post("/sendPassengerData", (req,res)=> {
