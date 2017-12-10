@@ -95,7 +95,6 @@ class DB {
     cancelBooking(id, amount, callback){
         this.con.connect((err) => {
             if (err) throw err;
-            // TODO return tickets if user exited
             let sql = `
             UPDATE flighttypes 
             inner join  mainairport.airplanesflight as currentFlight on 
@@ -113,16 +112,52 @@ class DB {
     }
     // eslint-disable-next-line no-unused-vars
     sendPassengerData(pasFlightObj, callback){
-        // TODO insert passengers data into tables
-        let sql = "";
+        let baggageArr = [], passengersArr = [] , ticketsArr=[];
+        let sql = `
+        SELECT COALESCE(MAX(SeatNumber),0) as lastValue FROM mainairport.tickets
+        WHERE FlightId="${pasFlightObj.flight.flightId}";`;
         this.con.connect((err) => {
             if (err) throw err;
-            this.con.query(sql, (err, res)=>{
-                let bookedSuccessfully = true;
-                if (err) bookedSuccessfully = false;
-                console.log(res);
-                this.close();
-                callback(bookedSuccessfully);
+            this.con.query(sql, (err, result)=>{
+                if (err) throw err;
+                pasFlightObj.passengers.map((passenger,i)=>{
+                    baggageArr.push([passenger.ticketId]);
+                    passengersArr.push([passenger.fName, passenger.sName, passenger.birthday,passenger.tel,passenger.passportId]);
+                    ticketsArr.push([passenger.ticketId,pasFlightObj.flight.flightId,result[0].lastValue+i+1,passenger.passportId]);
+                });
+                let sqlIns1 = `
+                INSERT INTO mainairport.baggages (BaggageId) VALUES ?
+                ON DUPLICATE KEY UPDATE BaggageId=BaggageId;
+                `;
+                this.con.query(sqlIns1, [baggageArr], (err)=>{
+                    let bookedSuccessfully = true;
+                    if (err)  {
+                        bookedSuccessfully=false;
+                        this.close();
+                        throw err;
+                    }
+                    let sqlIns2 = `
+                    INSERT INTO mainairport.passengers(FirstName,LastName,DataBirth,Phone,PassportId) VALUES ?
+                    ON DUPLICATE KEY UPDATE FirstName=VALUES(FirstName), LastName=VALUES(LastName), DataBirth=VALUES(DataBirth), Phone=VALUES(Phone);
+                    `;
+                    this.con.query(sqlIns2, [passengersArr], (err)=>{
+                        if (err)  {
+                            bookedSuccessfully=false;
+                            this.close();
+                            throw err;
+                        }
+                        let sqlIns3 = `
+                        INSERT INTO mainairport.tickets (TicketId, FlightId, SeatNumber, PassengerId) VALUES ?
+                        `;
+                        this.con.query(sqlIns3, [ticketsArr], (err)=>{
+                            if (err)  {
+                                bookedSuccessfully=false;
+                                this.close();
+                            }
+                            callback(bookedSuccessfully);
+                        });
+                    });
+                });
             });
         });
 

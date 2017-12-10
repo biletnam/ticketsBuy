@@ -78,7 +78,7 @@ module.exports = function (app) {
         let bookingId = generateRandomNumber(100000,0);
         let tickets = [];
         for (let i = 0; i < req.body.flight.personAmount ; i++){
-            tickets[i] = generateRandomNumber(10000000000, 0);
+            tickets[i] = generateRandomNumber(2147483646, 0);
             req.body.passengers[i].ticketId = tickets[i];
         }
         let userReq = new DB();
